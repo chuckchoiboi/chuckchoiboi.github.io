@@ -8,15 +8,15 @@ Rock Paper Scissors association decided to challenge Rocky on rounds of rock pap
 
 ### Start Screen
 
-![Start Screen](./img/wireframe1.jpg)
+![Start Screen](img/wireframe1.jpg)
 
 ### Match Up Screen
 
-![Match Up Screen](./img/wireframe2.jpg)
+![Match Up Screen](img/wireframe2.jpg)
 
 ### Upgrade Screen
 
-![Upgrade Screen](./img/wireframe3.jpg)
+![Upgrade Screen](img/wireframe3.jpg)
 
 ## Technologies Used:
 
