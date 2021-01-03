@@ -3,3 +3,178 @@
   padding: 0;
   box-sizing: border-box;
 }
+body {
+  background: #eee;
+}
+
+.row > * {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* General Game Screen */
+
+#game {
+  width: 500px;
+  height: 350px;
+  border: 2px solid black;
+  background: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.sound-button {
+  margin-top: 5px;
+  margin-right: 10px;
+  opacity: 0.4;
+  transition: opacity 0.3s;
+  right: 0;
+}
+
+.sound-button:hover {
+  opacity: 1;
+}
+
+/* Start Screen */
+
+#start-screen {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#play-button {
+  margin-top: 15px;
+}
+
+/* Matchup Screen */
+
+#matchup-screen {
+  height: 100%;
+  padding: 0 !important;
+  text-align: center;
+}
+
+#matchup-screen #game-play {
+  width: 100%;
+  height: 75%;
+  background-image: url('../img/ring.png');
+  background-size: cover;
+  background-position-y: 70%;
+  text-align: center;
+}
+
+#matchup-screen #player-stats {
+  width: 100%;
+  height: 10%;
+  border-top: 2px solid black;
+}
+
+#matchup-screen #stage-display {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  align-items: center;
+  border-top: 2px solid black;
+}
+
+#matchup-screen #stage-display .stages {
+  border: 1.5px black solid;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+}
+
+#matchup-screen #stage-display .current-stage {
+  background-color: #eee;
+}
+
+/* Upgrade Screen */
+
+#upgrade-screen {
+  height: 100%;
+  padding: 0 !important;
+  text-align: left;
+}
+
+#upgrade-screen #left-column {
+  width: 33.33%;
+  border-right: 2px solid black;
+}
+
+#upgrade-screen #left-column #player-stats {
+  height: 80%;
+}
+
+#upgrade-screen #left-column #matchup-wrapper {
+  height: 20%;
+}
+
+#upgrade-screen #left-column .stats-wrapper {
+  width: 100%;
+  padding: 20px;
+  text-align: center;
+}
+
+#upgrade-screen #left-column .avatar {
+  width: 100px;
+}
+
+#upgrade-screen #left-column .stats-items {
+  padding-top: 10px;
+}
+
+#upgrade-screen #right-column {
+  width: 66.66%;
+}
+
+#upgrade-screen #right-column #upgrades {
+  height: 90%;
+  border-bottom: 2px solid black;
+}
+
+#upgrade-screen #right-column #upgrades img {
+  width: 50px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+#upgrade-screen #right-column #upgrades .punching-bag {
+  width: 25px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+#upgrade-screen #right-column #upgrades .upgrade-description {
+  margin-top: 20px;
+  margin-right: 5px;
+}
+
+#upgrade-screen #right-column #upgrades .row {
+  height: 33.3333%;
+}
+
+#upgrade-screen #right-column #upgrades .row h2 {
+  font-size: 14px;
+  margin: 0;
+}
+
+#upgrade-screen #right-column #upgrades .row h3 {
+  font-size: 14px;
+  margin: 0;
+}
+
+#upgrade-screen #right-column #upgrades .row p {
+  font-size: 12px;
+  margin: 0;
+}
+
+#upgrade-screen #right-column #money {
+  height: 10%;
+  text-align: center;
+}
+
+.progress {
+  width: 75%;
+}
