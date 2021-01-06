@@ -4,8 +4,7 @@
 
 
         JS for App
-        1. Make matchUp function iterate every second
-        2. Make player stats change based on upgrades purchased
+        1. Make player stats change based on upgrades purchased
 
             Money
             - If money.balance is insufficient, upgrade click shows "insufficient balance", if money.balance has enough balance, money balance is deducted and upgrade will be applied
@@ -21,13 +20,14 @@
             - Peloton bike maxes out health.maxHealth (12) and fist.strength (2.5), not purchaseable after the first purchase
             - Agency Contract makes News Coverage to quadraple instead of double, not purchasable after the first upgrade
 
+        2. rocky.fist.strength to increase by 0.5 once progress reaches 100, then resets rocky.fist.strength to 0
 
-
-
-        JS for DOM
-        1. Handle clicks for each upgrades
-        2. Make stats UIs update based on player variables
-        3. Make rounds progress bar update per stage
+        3. add special sounds to buttons/actions
+            - boxing bell sound effect for start screen button and matchup button
+            - money sound 1 when money is made
+            - money sound 2 when money is spent
+            - damage sound when rocky loses
+            - cheer when rocky wins
 
 
 
@@ -47,14 +47,17 @@
             fist: {
                 strength: 1,
                 progress: 0,
-                progressRate: 1,
+                progressRate: 5,
             },
             money: {
                 balance: 0,
                 prizeRate: 50,
             },
             kos: 0,
+            currentRound: 1,
         }
+
+
 
         // enemy
         class Enemy {
@@ -63,6 +66,8 @@
                 this.fist = Math.floor(Math.random() * Math.floor(3))
             }
         }
+
+
 
         // rounds
         const rounds = {
@@ -73,9 +78,91 @@
             round5: [],
         }
 
-    // NOTE FUNCTIONS
 
-        // generate enemy
+
+        // gamePlay
+            // used for renderGame
+
+        const gamePlay = []
+
+
+
+     // NOTE RENDER LOGIC 
+
+        // RENDER FUNCTIONS
+
+            // renderFightWon
+                // increases money.balance and fist.progress, calls updateMoney and updateFistProgress to manipulate DOM
+
+            const renderFightWon = function() {
+                rocky.money.balance += rocky.money.prizeRate
+                rocky.fist.progress += rocky.fist.progressRate
+                updateMoney()
+                updateFistProgress()
+                console.log('fight won!');
+            }
+
+
+
+            // renderFightLost
+                // decreases rocky.health.remainingHealth, then calls updateHealth to manipulate DOM
+
+            const renderFightLost = function() {
+                rocky.health.remainingHealth -= 1
+                updateHealth()
+                console.log('fight lost...');
+            }
+
+
+
+            // renderFightDrawn
+                // for now, logs 'it was a draw'
+
+            const renderFightDrawn = function() {
+                console.log('it was a draw');
+            }
+
+
+
+            // renderRound
+                // calls upateRound to manipuate DOM, and increases currentRound
+
+            const renderRound = function() {
+                updateRound()
+                console.log(`Round #${rocky.currentRound}`);
+                rocky.currentRound ++
+            }            
+
+
+
+            // renderGame
+                // sets rocky.currentRound to 1, calls updateRound to manipulate DOM
+                // setInterval is called to iterate each rendering functions in gamePlay array every second
+                // if rocky's remainingHealth reachs 0, interval breaks and rocky's ko increases, updateKos is ran to manipulate DOM, then calls switchScreen to go to upgrade screen
+
+            const renderGame = function() {
+                rocky.currentRound = 1
+                updateRound()
+
+                let counter = 0;
+                let i = setInterval(function(){
+                    gamePlay[counter]()
+                    counter ++;
+
+                    if(rocky.health.remainingHealth === 0) {
+                        clearInterval(i)
+                        rocky.kos ++
+                        updateKos()
+                        switchScreen()
+                    }
+
+                }, 1000)
+
+            }
+
+    // NOTE GAME LOGIC
+
+        // generateEnemy
             // creates a number of enemies specified in an array
 
         const generateEnemy = function (arr, num) {
@@ -84,7 +171,9 @@
             }
         }
 
-        // generate round
+
+
+        // generateRounds
             // creates specified number of enemies for each round
 
         const generateRounds = function () {
@@ -95,61 +184,88 @@
             generateEnemy(rounds.round5, 20);
         }
 
+
+
         // recoverHealth
+            // recovers rocky's remainingHealth to maxHealth
 
         const recoverHealth = function() {
             rocky.health.remainingHealth = rocky.health.maxHealth
         }
 
+
+
         // fight
-            // compares fist strength and takes away rocky or enemy's health. If rocky wins, rocky makes money
+            // compares fist strength and pushes renderFunctions to gamePlay array accordingly
 
         const fight = function(enemy) {
             if (rocky.fist.strength < enemy.fist) {
-                rocky.health.remainingHealth --
-                console.log('enemy wins!');
+                gamePlay.push(renderFightLost)
             } else if (rocky.fist.strength > enemy.fist) {
-                enemy.health --
-                rocky.money.balance += rocky.money.prizeRate
-                console.log('rocky wins!');
+                gamePlay.push(renderFightWon)
             } else {
-                console.log('tied');
+                gamePlay.push(renderFightDrawn)
             }
         }
 
-        // match up
-            // recovers rocky's remaining health, calls generate rounds function, calls fight function
+        
 
-        const matchUp = function () {
+        // loopEnemies
+            // iterates each element in an array to call fight function
 
-            recoverHealth()
+        const loopEnemies = function(enemies) {
+            for(enemy of enemies){
+                    fight(enemy)
+                }
+        }
 
-            generateRounds()
 
+
+        // loopRounds
+            // iterates each element in an array to push renderRound function and call loopEnemies
+        
+        const loopRounds = function() {
             const matchList = Object.values(rounds)
 
             for (let i = 0; i <= matchList.length-1; i++) {
-                // NOTE make changes to rounds progress bar in $('#matchup-screen')
-                console.log(`round ${i+1}`);
-
-                for(enemy of matchList[i]){
-                    
-                    fight(enemy)
-
-                    if(rocky.health.remainingHealth === 0){
-                        console.log('game over');
-                        rocky.kos ++
-                        return
-                    } else if (enemy.health === 0) {
-                    }
-
-                }
+                gamePlay.push(renderRound)
+                loopEnemies(matchList[i])
             }
-
         }
 
 
+
+        // gamePlayReset
+            // resets gamePlay array
+            const gamePlayReset = function() {
+                gamePlay.length = 0
+            }
+        
+
+
+        // matchUp
+            // calls functions below to: 
+                // 1. reset gamePlay array 
+                // 2. generate a new rounds array
+                // 3. iterate each round in rounds array
+                // 4. iterate each render functions in gamePlay array
+
+        const matchUp = function () {
+            gamePlayReset()
+            generateRounds()
+            loopRounds()
+            renderGame()
+        } 
+
+
+
 // NOTE JS for DOM
+
+    // audio
+
+    let audio = document.getElementById('player')
+    audio.volume = 0.7
+    
 
     // Sound button mute on/off
 
@@ -157,21 +273,88 @@
         $(this).toggleClass('sound-off')
         if($(this).hasClass('sound-off')){
             $(this).attr('src','img/sound-off.png')
+            audio.muted = true;
         } else {
             $(this).attr('src','img/sound-on.png')
+            audio.muted = false
         }
     })
 
+
+
+    // switchScreen
+            // switches screen between matchup and upgrade
+
+        const switchScreen = function() {
+            recoverHealth()
+            
+            updateHealth()
+            
+            $('#matchup-screen').toggleClass('d-none')
+            $('#upgrade-screen').toggleClass('d-none')
+        }
+
+
+
     // Buttons on each screens
+        // start screen's button to switch to matchup screen
 
-    $('#play-button').click(function(){
-        $('#start-screen').toggleClass('d-none')
-        $('#matchup-screen').toggleClass('d-none')
-        matchUp()
-    })
+        $('#play-button').click(function(){
+            $('#start-screen').toggleClass('d-none')
+            $('#matchup-screen').toggleClass('d-none')
+            matchUp()
+        })
 
-    $('#matchup-button').click(function(){
-        $('#matchup-screen').toggleClass('d-none')
-        $('#upgrade-screen').toggleClass('d-none')
-        matchUp()
-    })
+
+        // upgrade screen's button
+
+        $('#matchup-button').click(function(){
+            switchScreen()
+            matchUp()
+        })
+
+    
+    // STATUS UPDATES
+
+            // updateFistProgress
+                // updates DOM's .fist-progress to rocky.fist.progress's value
+
+            const updateFistProgress = function() {
+                $('.fist-progress').css('width', `${rocky.fist.progress}`)
+            }
+
+
+
+            // updateMoney
+                // updates DOM's .money to rocky.money.balance
+
+            const updateMoney = function() {
+                $('.money').text(`💰 $${rocky.money.balance}`)
+            }
+
+
+
+            // updateHealth
+                // updates DOM's .health to number of hearts matching rocky.health.remainingHealth
+            const updateHealth = function() {
+                $('.health').text('💓'.repeat(rocky.health.remainingHealth))
+            }
+
+
+
+            // updateRound
+                // updates DOM's .stages based on rocky.currentRound
+
+            const updateRound = function() {
+                $('.stages').removeClass('current-round')
+                $(`#stage${rocky.currentRound}`).addClass('current-round')
+            }
+
+
+
+            // updateKos
+                // updates DOM's .ko based on rocky.kos
+
+            const updateKos = function() {
+                $('.ko').text(`Knocked out: ${rocky.kos}`)
+            }
