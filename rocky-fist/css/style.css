@@ -3,8 +3,13 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   background: #eee;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
 }
 
 .row > * {
@@ -36,6 +41,10 @@ body {
   opacity: 1;
 }
 
+.health {
+  font-size: 14px;
+}
+
 /* Start Screen */
 
 #start-screen {
@@ -63,6 +72,13 @@ body {
   background-size: cover;
   background-position-y: 70%;
   text-align: center;
+}
+
+#matchup-screen #game-play #rocky {
+  width: 20%;
+  position: absolute;
+  top: 45px;
+  left: 100px;
 }
 
 #matchup-screen #player-stats {
@@ -132,6 +148,18 @@ body {
 #upgrade-screen #right-column #upgrades {
   height: 90%;
   border-bottom: 2px solid black;
+}
+
+#upgrade-screen #right-column #upgrades .max {
+  opacity: 0.2;
+}
+
+#upgrade-screen #right-column #upgrades .upgrade-items {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+#upgrade-screen #right-column #upgrades .upgrade-items:hover {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
 }
 
 #upgrade-screen #right-column #upgrades img {

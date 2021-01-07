@@ -41,7 +41,9 @@
 
         <!-- NOTE Matchup Screen -->
         <div id="matchup-screen" class="d-flex justify-content-between flex-column container align-items-center d-none">
-            <div id="game-play" class="row"></div>
+            <div id="game-play" class="row">
+                <img id="rocky" src="img/rocky-body.png" alt="">
+            </div>
             <div id="player-stats" class="row">
                 <div class="col my-auto ko">Knocked Out: 0</div>
                 <div class="col my-auto">
@@ -53,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col my-auto health">💓💓 </div>
+                <div class="col my-auto health">💓 </div>
                 <div class="col my-auto money">💰 $0</div>
             </div>
             <div id="stage-display" class="d-flex justify-content-evenly">
@@ -69,7 +71,7 @@
         <div id="upgrade-screen" class="d-flex d-none">
             <div id="left-column" class="d-flex flex-column">
                 <div id="player-stats" class="d-flex flex-column align-items-center justify-content-center">
-                    <img class="avatar" src="img/default-avatar.png" alt="">
+                    <img class="avatar" src="img/rocky-face.png" alt="">
                     <div class="d-flex flex-column justify-content-between stats-wrapper">
                         <div class="my-auto stats-items ko">Knocked out: 0</div>
                         <div class="my-auto stats-items">
@@ -81,7 +83,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="my-auto stats-items health">💓💓 </div>
+                        <div class="my-auto stats-items health">💓 </div>
                     </div>
                 </div>
 
@@ -94,17 +96,17 @@
             <div id="right-column" class="d-flex flex-column">
                 <div id="upgrades" class="container">
                     <div class="row">
-                        <div class="col d-flex justify-content-start">
+                        <div id="strength" class="col d-flex justify-content-start upgrade-items">
                             <img src="img/punchingbag.png" alt="punchingbag" class="punching-bag">
                             <div class="upgrade-description">
                                 <h2>Strength Training</h2>
                                 <h3>$50</h3>
                                 <p>
-                                Strength + 1
+                                Strength + 5
                                 </p>
                             </div>
                         </div>
-                        <div class="col d-flex justify-content-start">
+                        <div id="shake" class="col d-flex justify-content-start upgrade-items">
                             <img src="img/shake.svg" alt="shake">
                             <div class="upgrade-description">
                                 <h2>Protein Shake</h2>
@@ -117,17 +119,17 @@
                         
                     </div>
                     <div class="row">
-                        <div class="col d-flex justify-content-start">
+                        <div id="endurance" class="col d-flex justify-content-start upgrade-items">
                             <img src="img/jumprope.png" alt="jumprope">
                             <div class="upgrade-description">
                                 <h2>Endurance Training</h2>
                                 <h3>$100</h3>
                                 <p>
-                                    Health + 1
+                                    Health + 1 (max 6 health)
                                 </p>
                             </div>
                         </div>
-                        <div class="col d-flex justify-content-start">
+                        <div id="peloton" class="col d-flex justify-content-start upgrade-items">
                             <img src="img/peloton.png" alt="peloton-bike">
                             <div class="upgrade-description">
                                 <h2>Peloton Bike</h2>
@@ -140,17 +142,17 @@
                     
                     </div>
                     <div class="row">
-                        <div class="col d-flex justify-content-start">
+                        <div id="news" class="col d-flex justify-content-start upgrade-items">
                             <img src="img/news.png" alt="news-coverage">
                             <div class="upgrade-description">
                                 <h2>News Coverage</h2>
                                 <h3>$500</h3>
                                 <p>
-                                    Increases $ per win
+                                    Increases $ per win (max $500 per win)
                                 </p>
                             </div>
                         </div>
-                        <div class="col d-flex justify-content-start">
+                        <div id="agency" class="col d-flex justify-content-start upgrade-items">
                             <img src="img/contract.png" alt="contract">
                             <div class="upgrade-description">
                                 <h2>Agency Contract</h2>

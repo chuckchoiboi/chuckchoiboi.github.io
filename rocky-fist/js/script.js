@@ -4,30 +4,25 @@
 
 
         JS for App
-        1. Make player stats change based on upgrades purchased
 
-            Money
-            - If money.balance is insufficient, upgrade click shows "insufficient balance", if money.balance has enough balance, money balance is deducted and upgrade will be applied
-            - Format number as currency with comma only on display
+        1. create an intro with skip button
+        
+        2. add rocky character and enemy characters
+        
+        3. add an ending, add boss fight
 
-            Basic Upgrades
-            - health.maxHealth goes up one per endurance training upgrade, caps at 12
-            - fist.progress goes up by fist.progressRate, up to 100 per strength training upgrade. Once fist.progress reaches 100, fist.strength increases by 0.5, caps at 2.5
-            - money.prizeRate doubles per News Coverage, caps at 200
-
-            Advanced upgrades
-            - Protein Shake increases fist.progressRate to 5, not purchasable after the first purchase
-            - Peloton bike maxes out health.maxHealth (12) and fist.strength (2.5), not purchaseable after the first purchase
-            - Agency Contract makes News Coverage to quadraple instead of double, not purchasable after the first upgrade
-
-        2. rocky.fist.strength to increase by 0.5 once progress reaches 100, then resets rocky.fist.strength to 0
-
-        3. add special sounds to buttons/actions
+        4. add special sounds to buttons/actions
             - boxing bell sound effect for start screen button and matchup button
             - money sound 1 when money is made
             - money sound 2 when money is spent
             - damage sound when rocky loses
             - cheer when rocky wins
+
+        
+
+        minor fixes
+            - rocky fist to update image
+            - adjust stage progress styling to be more visible
 
 
 
@@ -41,8 +36,8 @@
         // player
         const rocky = {
             health: {
-                remainingHealth: 2,
-                maxHealth: 2
+                remainingHealth: 1,
+                maxHealth: 1
             },
             fist: {
                 strength: 1,
@@ -51,7 +46,7 @@
             },
             money: {
                 balance: 0,
-                prizeRate: 50,
+                prizeRate: 25,
             },
             kos: 0,
             currentRound: 1,
@@ -96,7 +91,7 @@
 
             const renderFightWon = function() {
                 rocky.money.balance += rocky.money.prizeRate
-                rocky.fist.progress += rocky.fist.progressRate
+                upgrades.strength.executeUpgrade()
                 updateMoney()
                 updateFistProgress()
                 console.log('fight won!');
@@ -154,6 +149,9 @@
                         rocky.kos ++
                         updateKos()
                         switchScreen()
+                    } else if (counter + 1 === gamePlay.length + 1) {
+                        clearInterval(i)
+                        console.log('game is cleared!');
                     }
 
                 }, 1000)
@@ -161,6 +159,96 @@
             }
 
     // NOTE GAME LOGIC
+
+        // Upgrdaes
+
+            // upgrades
+
+            const upgrades = {
+                strength: {
+                    executeUpgrade: 
+                    function() {
+                        if(rocky.fist.strength !== 2.5){
+                            rocky.fist.progress += rocky.fist.progressRate
+                            updateFistUpgrade()
+                            updateFistProgress()
+                        }
+                    },
+                    cost: 50
+                },
+                shake: {
+                    executeUpgrade:
+                    function() {
+                        $('#strength div p').text('Strength + 25')
+                        $('#shake').addClass('max')
+                        if(rocky.fist.progressRate === 5) {
+                            rocky.fist.progressRate = 25
+                        }
+                    },
+                    cost: 1000
+                },
+                endurance: {
+                    executeUpgrade: 
+                    function() {
+                        if(rocky.health.maxHealth < 5) {
+                            rocky.health.maxHealth ++
+                            recoverHealth()
+                            updateHealth()
+                        } else if (rocky.health.maxHealth = 5) {
+                            rocky.health.maxHealth ++
+                            recoverHealth()
+                            updateHealth()
+                            $('#endurance').addClass('max')
+                        }
+                    },
+                    cost: 100
+                },
+                peloton: {
+                    executeUpgrade:
+                    function() {
+                        rocky.fist.strength = 2.5
+                        rocky.fist.progress = 100
+                        rocky.health.maxHealth = 6
+                        updateFistProgress()
+                        recoverHealth()
+                        updateHealth()
+                        $('#strength, #shake, #endurance, #peloton').addClass('max')
+                    },
+                    cost: 2000
+                },
+                news: {
+                    executeUpgrade:
+                    function() {
+                        if(rocky.money.prizeRate > 250){
+                            rocky.money.prizeRate = 500
+                            $('#news').addClass('max')
+                        } else if (rocky.money.prizeRate !== 500) {
+                            rocky.money.prizeRate *=2
+                        }
+                    },
+                    cost: 500
+                },
+                agency: {
+                    executeUpgrade:
+                    function() {
+                        $('#agency').addClass('max')
+
+                        if(rocky.money.prizeRate === 500){
+                            $('#news').removeClass('max')
+                        }
+                        $('#news div p').text('Increases $ per win (max $1000 per win)')
+                        upgrades.news.executeUpgrade = function() {
+                            if(rocky.money.prizeRate > 250){
+                                rocky.money.prizeRate = 1000
+                                $('#news').addClass('max')
+                            } else if (rocky.money.prizeRate !== 1000) {
+                                rocky.money.prizeRate *=4
+                            }
+                        }
+                    },
+                    cost: 1000
+                }
+            }
 
         // generateEnemy
             // creates a number of enemies specified in an array
@@ -177,11 +265,11 @@
             // creates specified number of enemies for each round
 
         const generateRounds = function () {
-            generateEnemy(rounds.round1, 3);
-            generateEnemy(rounds.round2, 5);
-            generateEnemy(rounds.round3, 10);
-            generateEnemy(rounds.round4, 15);
-            generateEnemy(rounds.round5, 20);
+            generateEnemy(rounds.round1, 2);
+            generateEnemy(rounds.round2, 3);
+            generateEnemy(rounds.round3, 5);
+            generateEnemy(rounds.round4, 10);
+            generateEnemy(rounds.round5, 15);
         }
 
 
@@ -303,6 +391,7 @@
             $('#start-screen').toggleClass('d-none')
             $('#matchup-screen').toggleClass('d-none')
             matchUp()
+            audio.play()
         })
 
 
@@ -311,6 +400,38 @@
         $('#matchup-button').click(function(){
             switchScreen()
             matchUp()
+        })
+
+    
+    // Upgrade items
+        // check balance
+        const checkBalance = function (upgrade, cost) {
+            if(rocky.money.balance >= cost){
+                rocky.money.balance -= cost
+                updateMoney()
+                upgrade()
+            } else {
+                console.log('insufficient balance');
+            }
+        }
+
+        // upgrade-items div style
+        $('.upgrade-items').mousedown(function(){
+            $(this).addClass('shadow-sm')
+        })
+        $('.upgrade-items').mouseup(function(){
+            $(this).removeClass('shadow-sm')
+        })
+        $('.upgrade-items').mouseleave(function(){
+            $(this).removeClass('shadow-sm')
+        })
+
+        // upgrade-items click handler
+        $('.upgrade-items').click( function () {
+            const upgrade = $(this).attr('id')
+            if(!$(this).hasClass('max')){
+                checkBalance(upgrades[upgrade].executeUpgrade, upgrades[upgrade].cost)
+            }
         })
 
     
@@ -323,13 +444,26 @@
                 $('.fist-progress').css('width', `${rocky.fist.progress}`)
             }
 
+            // updateFistUpgrade
+
+            const updateFistUpgrade = function() {
+                if (rocky.fist.strength === 2.0 && rocky.fist.progress >= 100) {
+                    rocky.fist.strength += 0.5
+                    rocky.fist.progress = 100
+                    $('#strength').addClass('max')
+                } else if (rocky.fist.strength < 2.0 && rocky.fist.progress >= 100) {
+                    rocky.fist.strength += 0.5
+                    rocky.fist.progress = rocky.fist.progress - 100
+                }
+            }
+
 
 
             // updateMoney
                 // updates DOM's .money to rocky.money.balance
 
             const updateMoney = function() {
-                $('.money').text(`💰 $${rocky.money.balance}`)
+                $('.money').text(`💰 $${rocky.money.balance.toLocaleString()}`)
             }
 
 
