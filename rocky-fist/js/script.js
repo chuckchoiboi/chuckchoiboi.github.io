@@ -7,23 +7,19 @@
 
         1. create an intro with skip button
         
-        2. add rocky character and enemy characters
+        2. add enemy characters
+            - two different characters that will alternate
+            - rock, paper, scissor images
+
+        3. Add fight animation
+            - move left once, right once
+            - play their hand shape
+            - if rocky wins, he puts his fist up
+            - if rocky loses, he gets beat up
         
-        3. add an ending, add boss fight
-
-        4. add special sounds to buttons/actions
-            - boxing bell sound effect for start screen button and matchup button
-            - money sound 1 when money is made
-            - money sound 2 when money is spent
-            - damage sound when rocky loses
-            - cheer when rocky wins
-
-        
-
-        minor fixes
-            - rocky fist to update image
-            - adjust stage progress styling to be more visible
-
+        4. add an ending, add boss fight
+            - ending will show number of KOs it took
+            - replay button
 
 
         
@@ -80,6 +76,33 @@
 
         const gamePlay = []
 
+        // Audio
+            // Game Start & Match Up
+            const audioMatchup = function() {
+                new Audio('music/boxing-bell.mp3').play()
+            }
+
+
+            // Money Earned
+            const audioMoneyEarned = function() {
+                new Audio('music/money-earned.mp3').play()
+            }
+
+            // Money Spent
+            const audioMoneySpent = function() {
+                new Audio('music/money-spent.mp3').play()
+            }
+
+            // Insufficient Money
+            const audioInsufficientMoney = function() {
+                new Audio('music/insufficient-money.mp3').play()
+            }
+
+            // Damage
+            const audioDamage = function() {
+                new Audio('music/damage.mp3').play()
+            }
+
 
 
      // NOTE RENDER LOGIC 
@@ -90,10 +113,14 @@
                 // increases money.balance and fist.progress, calls updateMoney and updateFistProgress to manipulate DOM
 
             const renderFightWon = function() {
+                audioMoneyEarned()
+                if(rocky.fist.strength !== 2.5){
+                    rocky.fist.progress += 1
+                    updateFistUpgrade()
+                    updateFistProgress()
+                }
                 rocky.money.balance += rocky.money.prizeRate
-                upgrades.strength.executeUpgrade()
                 updateMoney()
-                updateFistProgress()
                 console.log('fight won!');
             }
 
@@ -103,6 +130,7 @@
                 // decreases rocky.health.remainingHealth, then calls updateHealth to manipulate DOM
 
             const renderFightLost = function() {
+                audioDamage()
                 rocky.health.remainingHealth -= 1
                 updateHealth()
                 console.log('fight lost...');
@@ -119,14 +147,63 @@
 
 
 
+            // renderDelay
+                // delay before round starts
+
+            const renderDelay = function() {
+                console.log('get ready');
+            }
+
+
+            
+            // renderRoundComplete
+                // stage complete message
+
+            const renderRoundComplete = function() {
+                if(rocky.currentRound > 1){
+                    console.log(`You get $${(rocky.currentRound)*rocky.money.prizeRate} for completing round# ${rocky.currentRound -1}!`);
+                    $('.victory').text(`You get $${(rocky.currentRound)*rocky.money.prizeRate} for completing round# ${rocky.currentRound -1}!`)
+                    animateRoundComplete()
+                    rocky.money.balance += (rocky.currentRound)*rocky.money.prizeRate
+                    updateMoney()
+                    audioMoneyEarned()
+                }
+            }
+
+            // animateRoundComplete
+
+            const animateRoundComplete = function() {
+                $('.victory').addClass('animate')
+                setTimeout(function(){
+                    $('.victory').removeClass('animate')
+                }, 2000)
+            }
+
+
+
             // renderRound
                 // calls upateRound to manipuate DOM, and increases currentRound
 
             const renderRound = function() {
                 updateRound()
-                console.log(`Round #${rocky.currentRound}`);
-                rocky.currentRound ++
-            }            
+                $('.round').text(`Round ${rocky.currentRound}`)
+                animateRound()
+                rocky.currentRound ++ 
+            }        
+            
+            // animateRound
+                // animates round message
+
+            const animateRound = function() {
+                $('.round').addClass('animate')
+                setTimeout(function(){
+                    $('.fight').addClass('animate')
+                }, 1000)
+                setTimeout(function(){
+                    $('.round').removeClass('animate')
+                    $('.fight').removeClass('animate')
+                }, 2000)
+            }
 
 
 
@@ -209,6 +286,7 @@
                         rocky.fist.strength = 2.5
                         rocky.fist.progress = 100
                         rocky.health.maxHealth = 6
+                        $('.fist').attr('src', 'img/infinity-gauntlet.png').attr('width', '15px')
                         updateFistProgress()
                         recoverHealth()
                         updateHealth()
@@ -317,7 +395,10 @@
 
             for (let i = 0; i <= matchList.length-1; i++) {
                 gamePlay.push(renderRound)
+                gamePlay.push(renderDelay)
                 loopEnemies(matchList[i])
+                gamePlay.push(renderRoundComplete)
+                gamePlay.push(renderDelay)
             }
         }
 
@@ -339,6 +420,7 @@
                 // 4. iterate each render functions in gamePlay array
 
         const matchUp = function () {
+            audioMatchup()
             gamePlayReset()
             generateRounds()
             loopRounds()
@@ -352,8 +434,6 @@
     // audio
 
     let audio = document.getElementById('player')
-    audio.volume = 0.7
-    
 
     // Sound button mute on/off
 
@@ -391,6 +471,7 @@
             $('#start-screen').toggleClass('d-none')
             $('#matchup-screen').toggleClass('d-none')
             matchUp()
+            audioMatchup()
             audio.play()
         })
 
@@ -407,10 +488,12 @@
         // check balance
         const checkBalance = function (upgrade, cost) {
             if(rocky.money.balance >= cost){
+                audioMoneySpent()
                 rocky.money.balance -= cost
                 updateMoney()
                 upgrade()
             } else {
+                audioInsufficientMoney()
                 console.log('insufficient balance');
             }
         }
@@ -450,10 +533,16 @@
                 if (rocky.fist.strength === 2.0 && rocky.fist.progress >= 100) {
                     rocky.fist.strength += 0.5
                     rocky.fist.progress = 100
+                    $('.fist').attr('src', 'img/infinity-gauntlet.png').attr('width', '15px')
                     $('#strength').addClass('max')
-                } else if (rocky.fist.strength < 2.0 && rocky.fist.progress >= 100) {
+                } else if (rocky.fist.strength === 1.5 && rocky.fist.progress >= 100) {
                     rocky.fist.strength += 0.5
                     rocky.fist.progress = rocky.fist.progress - 100
+                    $('.fist').attr('src', 'img/infinity-gauntlet-no-stone.png').attr('width', '13px')
+                } else if (rocky.fist.strength === 1.0 && rocky.fist.progress >= 100) {
+                    rocky.fist.strength += 0.5
+                    rocky.fist.progress = rocky.fist.progress - 100
+                    $('.fist').attr('src', 'img/fist.png').attr('width', '10px')
                 }
             }
 
