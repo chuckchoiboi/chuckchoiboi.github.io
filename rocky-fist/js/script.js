@@ -6,18 +6,8 @@
         JS for App
 
         1. create an intro with skip button
-        
-        2. add enemy characters
-            - two different characters that will alternate
-            - rock, paper, scissor images
 
-        3. Add fight animation
-            - move left once, right once
-            - play their hand shape
-            - if rocky wins, he puts his fist up
-            - if rocky loses, he gets beat up
-        
-        4. add an ending, add boss fight
+        2. add an ending, add boss fight
             - ending will show number of KOs it took
             - replay button
 
@@ -46,6 +36,9 @@
             },
             kos: 0,
             currentRound: 1,
+            animate: {
+                stopRocky: false,
+            }
         }
 
 
@@ -113,6 +106,8 @@
                 // increases money.balance and fist.progress, calls updateMoney and updateFistProgress to manipulate DOM
 
             const renderFightWon = function() {
+                $('#rocky').attr('src', 'img/rocky-wins.png')
+                $('#strange').attr('src', 'img/strange-lost.png')
                 audioMoneyEarned()
                 if(rocky.fist.strength !== 2.5){
                     rocky.fist.progress += 1
@@ -130,6 +125,8 @@
                 // decreases rocky.health.remainingHealth, then calls updateHealth to manipulate DOM
 
             const renderFightLost = function() {
+                $('#rocky').attr('src', 'img/rocky-lost.png')
+                $('#strange').attr('src', 'img/strange-wins.png')
                 audioDamage()
                 rocky.health.remainingHealth -= 1
                 updateHealth()
@@ -142,7 +139,21 @@
                 // for now, logs 'it was a draw'
 
             const renderFightDrawn = function() {
+                $('#rocky').attr('src', 'img/rocky-body.png')
+                $('#strange').attr('src', 'img/strange-body.png')
                 console.log('it was a draw');
+            }
+
+            // renderEnemy
+
+            const renderEnemy = function(enemy) {
+                if(enemy.fist === 0){
+                    $('#strange').attr('src', 'img/strange-scissors.png')
+                } else if (enemy.fist === 1) {
+                    $('#strange').attr('src', 'img/strange-rock.png')
+                } else if (enemy.fist === 2) {
+                    $('#strange').attr('src', 'img/strange-paper.png')
+                }
             }
 
 
@@ -151,7 +162,33 @@
                 // delay before round starts
 
             const renderDelay = function() {
-                console.log('get ready');
+                $('#rocky').css('left', '100px')
+                $('#strange').css('left', '270px')
+                rocky.animate.stopRocky = false
+                moveChar($('#rocky'))
+                moveChar($('#strange'))
+                $('#rocky').attr('src', 'img/rocky-body.png')
+                $('#strange').attr('src', 'img/strange-body.png')
+            }
+
+            // rockyPlay
+            
+            const rockyPlay1 = function() {
+                rocky.animate.stopRocky = true
+                $('#rocky').attr('src', 'img/rocky-rock.png')
+                $('#strange').attr('src', 'img/strange-scissors.png')
+            }
+
+            const rockyPlay2 = function() {
+                rocky.animate.stopRocky = true
+                $('#rocky').attr('src', 'img/rocky-rock.png')
+                $('#strange').attr('src', 'img/strange-rock.png')
+            }
+
+            const rockyPlay3 = function() {
+                rocky.animate.stopRocky = true
+                $('#rocky').attr('src', 'img/rocky-rock.png')
+                $('#strange').attr('src', 'img/strange-paper.png')
             }
 
 
@@ -225,7 +262,11 @@
                         clearInterval(i)
                         rocky.kos ++
                         updateKos()
-                        switchScreen()
+                        setTimeout(function(){
+                            switchScreen()
+                            $('#rocky').attr('src', 'img/rocky-body.png')
+                            $('#strange').attr('src', 'img/strange-body.png')
+                        }, 500)
                     } else if (counter + 1 === gamePlay.length + 1) {
                         clearInterval(i)
                         console.log('game is cleared!');
@@ -233,6 +274,21 @@
 
                 }, 1000)
 
+            }
+
+            const moveChar = function($char) {
+                let leftVal = parseInt($char.css('left'),10)
+                let counter = 5;
+                let i = setInterval(function(){
+                    leftVal += counter
+                    $char.css('left', `${leftVal}px`)
+                    counter *= -1;
+
+                    if(rocky.animate.stopRocky === true) {
+                        clearInterval(i)
+                    } 
+
+                }, 500)
             }
 
     // NOTE GAME LOGIC
@@ -366,10 +422,34 @@
 
         const fight = function(enemy) {
             if (rocky.fist.strength < enemy.fist) {
+                gamePlay.push(renderDelay)
+                if(enemy.fist === 0){
+                    gamePlay.push(rockyPlay1)
+                } else if (enemy.fist === 1) {
+                    gamePlay.push(rockyPlay2)
+                } else {
+                    gamePlay.push(rockyPlay3)
+                }
                 gamePlay.push(renderFightLost)
             } else if (rocky.fist.strength > enemy.fist) {
+                gamePlay.push(renderDelay)
+                if(enemy.fist === 0){
+                    gamePlay.push(rockyPlay1)
+                } else if (enemy.fist === 1) {
+                    gamePlay.push(rockyPlay2)
+                } else {
+                    gamePlay.push(rockyPlay3)
+                }
                 gamePlay.push(renderFightWon)
             } else {
+                gamePlay.push(renderDelay)
+                if(enemy.fist === 0){
+                    gamePlay.push(rockyPlay1)
+                } else if (enemy.fist === 1) {
+                    gamePlay.push(rockyPlay2)
+                } else {
+                    gamePlay.push(rockyPlay3)
+                }
                 gamePlay.push(renderFightDrawn)
             }
         }

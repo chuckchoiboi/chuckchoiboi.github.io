@@ -81,6 +81,13 @@ body {
   left: 100px;
 }
 
+#matchup-screen #game-play #strange {
+  width: 23%;
+  position: absolute;
+  top: 55px;
+  left: 270px;
+}
+
 #matchup-screen #game-play .round-banner {
   position: absolute;
   top: 50px;
