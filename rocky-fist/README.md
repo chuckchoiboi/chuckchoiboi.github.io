@@ -29,19 +29,19 @@ Rock Paper Scissors association decided to challenge Rocky on rounds of rock pap
 
 ### UI:
 
-    - used bootstrap/flexbox to set the layout
+    - Used bootstrap/flexbox to set the layout
 
 ### Code:
 
-    - started off declaring required constants
-    - separated game logic and render logic
-        - game logic contains objects and functions that makes the game logic run, player upgrades and initilize function to reset the game data
-        - render logic contains functions that makes the DOM render based on the game logic that is ran once the game starts
+    - Started off declaring required constants
+    - Separated game logic and render logic
+        - Game logic contains objects and functions that makes the game logic run, player upgrades and initilize function to reset the game data
+        - Render logic contains functions that makes the DOM render based on the game logic that is ran once the game starts
         - gamePlay array contains render functions that were stored based on the game logic that was ran
 
 ## Challenges:
 
-making the gamePlay to render after each previous gamePlay rendering function was difficult. setInterval() was used to have the gamePlay to render every second of interval as a solution. The interval will break if the player's health reaches 0, but if ran all the way through, the game ends and shows replay option
+Making the gamePlay to render after each previous gamePlay rendering function was difficult. setInterval() was used to have the gamePlay to render every second of interval as a solution. The interval will break if the player's health reaches 0, but if ran all the way through, the game ends and shows replay option
 
 ## Additional information:
 
