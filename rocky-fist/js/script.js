@@ -10,7 +10,10 @@
     // NOTE Audio
         // Background Audio
         let audio = new Audio('music/track-1.mp3')
-        audio.loop = true
+        audio.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
 
         // Game Start & Match Up
         const audioMatchup = function() {
