@@ -27,9 +27,27 @@ Rock Paper Scissors association decided to challenge Rocky on rounds of rock pap
 
 ## Approach:
 
+### UI:
+
+    - used bootstrap/flexbox to set the layout
+
+### Code:
+
+    - started off declaring required constants
+    - separated game logic and render logic
+        - game logic contains objects and functions that makes the game logic run, player upgrades and initilize function to reset the game data
+        - render logic contains functions that makes the DOM render based on the game logic that is ran once the game starts
+        - gamePlay array contains render functions that were stored based on the game logic that was ran
+
 ## Challenges:
 
+making the gamePlay to render after each previous gamePlay rendering function was difficult. setInterval() was used to have the gamePlay to render every second of interval as a solution. The interval will break if the player's health reaches 0, but if ran all the way through, the game ends and shows replay option
+
 ## Additional information:
+
+### Instruction:
+
+Once the game starts, you will play against the opponent for multiple rounds. You will get money for every win, lose health for every loss, and nothing will happen for every draw. Every time you beat a round, you will get round completion reward. The goal of the game is to complete all 5 rounds. It gets harder every round, so upgrade Rocky's stats to get stronger and beat the game!
 
 ## App Demo
 
