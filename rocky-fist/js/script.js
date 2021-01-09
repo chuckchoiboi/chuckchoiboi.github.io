@@ -1,21 +1,46 @@
-/*
-    NOTE TO-DO list
+// Future improvements:
 
-
-
-        JS for App
-
-        1. create an intro with skip button
-
-        2. add an ending, add boss fight
-            - ending will show number of KOs it took
-            - replay button
-
-
-        
-*/
+    // add an intro story with a skip button
+    // add visual changes to rocky's fist upon upgrades
+    // change characters as round progresses
+    // show #turns left per round
 
 // NOTE JS for App
+
+    // NOTE Audio
+        // Background Audio
+        let audio = new Audio('music/track-1.mp3')
+        audio.loop = true
+
+        // Game Start & Match Up
+        const audioMatchup = function() {
+            new Audio('music/boxing-bell.mp3').play()
+        }
+
+        // Money Earned
+        const audioMoneyEarned = function() {
+            new Audio('music/money-earned.mp3').play()
+        }
+
+        // Money Spent
+        const audioMoneySpent = function() {
+            new Audio('music/money-spent.mp3').play()
+        }
+
+        // Insufficient Money
+        const audioInsufficientMoney = function() {
+            new Audio('music/insufficient-money.mp3').play()
+        }
+
+        // Damage
+        const audioDamage = function() {
+            new Audio('music/damage.mp3').play()
+        }
+
+        // Stage complete
+        const audioRoundComplete = function() {
+            new Audio('music/round-complete.mp3').play()
+        }
 
     // NOTE VARIABLES
 
@@ -69,34 +94,6 @@
 
         const gamePlay = []
 
-        // Audio
-            // Game Start & Match Up
-            const audioMatchup = function() {
-                new Audio('music/boxing-bell.mp3').play()
-            }
-
-
-            // Money Earned
-            const audioMoneyEarned = function() {
-                new Audio('music/money-earned.mp3').play()
-            }
-
-            // Money Spent
-            const audioMoneySpent = function() {
-                new Audio('music/money-spent.mp3').play()
-            }
-
-            // Insufficient Money
-            const audioInsufficientMoney = function() {
-                new Audio('music/insufficient-money.mp3').play()
-            }
-
-            // Damage
-            const audioDamage = function() {
-                new Audio('music/damage.mp3').play()
-            }
-
-
 
      // NOTE RENDER LOGIC 
 
@@ -116,7 +113,6 @@
                 }
                 rocky.money.balance += rocky.money.prizeRate
                 updateMoney()
-                console.log('fight won!');
             }
 
 
@@ -130,18 +126,15 @@
                 audioDamage()
                 rocky.health.remainingHealth -= 1
                 updateHealth()
-                console.log('fight lost...');
             }
 
 
 
             // renderFightDrawn
-                // for now, logs 'it was a draw'
 
             const renderFightDrawn = function() {
                 $('#rocky').attr('src', 'img/rocky-body.png')
                 $('#strange').attr('src', 'img/strange-body.png')
-                console.log('it was a draw');
             }
 
             // renderEnemy
@@ -163,7 +156,7 @@
 
             const renderDelay = function() {
                 $('#rocky').css('left', '100px')
-                $('#strange').css('left', '270px')
+                $('#strange').css('left', '280px')
                 rocky.animate.stopRocky = false
                 moveChar($('#rocky'))
                 moveChar($('#strange'))
@@ -171,21 +164,21 @@
                 $('#strange').attr('src', 'img/strange-body.png')
             }
 
-            // rockyPlay
+            // renderHands
             
-            const rockyPlay1 = function() {
+            const renderHands1 = function() {
                 rocky.animate.stopRocky = true
                 $('#rocky').attr('src', 'img/rocky-rock.png')
                 $('#strange').attr('src', 'img/strange-scissors.png')
             }
 
-            const rockyPlay2 = function() {
+            const renderHands2 = function() {
                 rocky.animate.stopRocky = true
                 $('#rocky').attr('src', 'img/rocky-rock.png')
                 $('#strange').attr('src', 'img/strange-rock.png')
             }
 
-            const rockyPlay3 = function() {
+            const renderHands3 = function() {
                 rocky.animate.stopRocky = true
                 $('#rocky').attr('src', 'img/rocky-rock.png')
                 $('#strange').attr('src', 'img/strange-paper.png')
@@ -198,22 +191,12 @@
 
             const renderRoundComplete = function() {
                 if(rocky.currentRound > 1){
-                    console.log(`You get $${(rocky.currentRound)*rocky.money.prizeRate} for completing round# ${rocky.currentRound -1}!`);
                     $('.victory').text(`You get $${(rocky.currentRound)*rocky.money.prizeRate} for completing round# ${rocky.currentRound -1}!`)
                     animateRoundComplete()
                     rocky.money.balance += (rocky.currentRound)*rocky.money.prizeRate
                     updateMoney()
-                    audioMoneyEarned()
+                    audioRoundComplete()
                 }
-            }
-
-            // animateRoundComplete
-
-            const animateRoundComplete = function() {
-                $('.victory').addClass('animate')
-                setTimeout(function(){
-                    $('.victory').removeClass('animate')
-                }, 2000)
             }
 
 
@@ -227,20 +210,6 @@
                 animateRound()
                 rocky.currentRound ++ 
             }        
-            
-            // animateRound
-                // animates round message
-
-            const animateRound = function() {
-                $('.round').addClass('animate')
-                setTimeout(function(){
-                    $('.fight').addClass('animate')
-                }, 1000)
-                setTimeout(function(){
-                    $('.round').removeClass('animate')
-                    $('.fight').removeClass('animate')
-                }, 2000)
-            }
 
 
 
@@ -269,12 +238,69 @@
                         }, 500)
                     } else if (counter + 1 === gamePlay.length + 1) {
                         clearInterval(i)
-                        console.log('game is cleared!');
+                        audio.pause()
+                        audio = new Audio('music/ending.mp3')
+                        audio.play()
+                        renderEnding()
                     }
 
                 }, 1000)
 
             }
+
+
+
+            // renderEnding
+
+            const renderEnding = function() {
+                rocky.animate.stopRocky = true;
+                $('#rocky').css('left', '100px')
+                $('#strange').css('left', '280px')
+                $('#rocky').attr('src', 'img/rocky-body.png')
+                $('#strange').attr('src', 'img/strange-body.png')
+                $('#rocky').addClass('ending')
+                $('#strange').addClass('disappear')
+                $('#start-screen h2, #start-screen h3').css('display', 'block')
+                $('#start-screen h3').text(`Number of KOs taken: ${rocky.kos}`)
+                $('#play-button').text('REPLAY')
+                setTimeout(function() {
+                    $('#start-screen').toggleClass('d-none')
+                    $('#matchup-screen').toggleClass('d-none')
+                }, 3000)
+            }
+
+
+
+        // Animation
+
+            // animateRoundComplete
+                // animates round complete message
+
+            const animateRoundComplete = function() {
+                $('.victory').addClass('animate')
+                setTimeout(function(){
+                    $('.victory').removeClass('animate')
+                }, 2000)
+            }
+
+            
+            
+            // animateRound
+                // animates round message
+
+            const animateRound = function() {
+                $('.round').addClass('animate')
+                setTimeout(function(){
+                    $('.fight').addClass('animate')
+                }, 1000)
+                setTimeout(function(){
+                    $('.round').removeClass('animate')
+                    $('.fight').removeClass('animate')
+                }, 2000)
+            }
+
+            // moveChar
+                // moves characters left and right
 
             const moveChar = function($char) {
                 let leftVal = parseInt($char.css('left'),10)
@@ -293,9 +319,7 @@
 
     // NOTE GAME LOGIC
 
-        // Upgrdaes
-
-            // upgrades
+        // Upgrades
 
             const upgrades = {
                 strength: {
@@ -339,6 +363,9 @@
                 peloton: {
                     executeUpgrade:
                     function() {
+                        audio.pause()
+                        audio = new Audio('music/track-2.mp3')
+                        audio.play()
                         rocky.fist.strength = 2.5
                         rocky.fist.progress = 100
                         rocky.health.maxHealth = 6
@@ -399,11 +426,11 @@
             // creates specified number of enemies for each round
 
         const generateRounds = function () {
-            generateEnemy(rounds.round1, 2);
+            generateEnemy(rounds.round1, 1);
             generateEnemy(rounds.round2, 3);
             generateEnemy(rounds.round3, 5);
-            generateEnemy(rounds.round4, 10);
-            generateEnemy(rounds.round5, 15);
+            generateEnemy(rounds.round4, 8);
+            generateEnemy(rounds.round5, 10);
         }
 
 
@@ -417,39 +444,35 @@
 
 
 
+        // evalauteEnemyHand
+            // evaluates which enemy hand should display in game
+
+        const evaluateEnemyHand = function() {
+            if(enemy.fist === 0){
+                    gamePlay.push(renderHands1)
+                } else if (enemy.fist === 1) {
+                    gamePlay.push(renderHands2)
+                } else {
+                    gamePlay.push(renderHands3)
+                }
+        }
+
+
         // fight
             // compares fist strength and pushes renderFunctions to gamePlay array accordingly
 
         const fight = function(enemy) {
             if (rocky.fist.strength < enemy.fist) {
                 gamePlay.push(renderDelay)
-                if(enemy.fist === 0){
-                    gamePlay.push(rockyPlay1)
-                } else if (enemy.fist === 1) {
-                    gamePlay.push(rockyPlay2)
-                } else {
-                    gamePlay.push(rockyPlay3)
-                }
+                evaluateEnemyHand()
                 gamePlay.push(renderFightLost)
             } else if (rocky.fist.strength > enemy.fist) {
                 gamePlay.push(renderDelay)
-                if(enemy.fist === 0){
-                    gamePlay.push(rockyPlay1)
-                } else if (enemy.fist === 1) {
-                    gamePlay.push(rockyPlay2)
-                } else {
-                    gamePlay.push(rockyPlay3)
-                }
+                evaluateEnemyHand()
                 gamePlay.push(renderFightWon)
             } else {
                 gamePlay.push(renderDelay)
-                if(enemy.fist === 0){
-                    gamePlay.push(rockyPlay1)
-                } else if (enemy.fist === 1) {
-                    gamePlay.push(rockyPlay2)
-                } else {
-                    gamePlay.push(rockyPlay3)
-                }
+                evaluateEnemyHand()
                 gamePlay.push(renderFightDrawn)
             }
         }
@@ -488,7 +511,32 @@
             // resets gamePlay array
             const gamePlayReset = function() {
                 gamePlay.length = 0
+
             }
+
+        // initialize
+            const initialize = function() {
+                rocky.health.remainingHealth = 1
+                rocky.health.maxHealth = 1
+                rocky.fist.strength = 1
+                rocky.fist.progress = 0
+                rocky.fist.progressRate = 5
+                rocky.money.balance = 0
+                rocky.money.prizeRate = 25
+                rocky.kos = 0
+                rocky.currentRound = 1
+                $('.upgrade-items').removeClass('max')
+                $('.fist').attr('src', 'img/glove.png').attr('width', '20px')
+                $('#rocky').removeClass('ending')
+                $('#strange').removeClass('disappear')
+                updateFistProgress()
+                updateFistUpgrade()
+                updateHealth()
+                updateKos()
+                updateMoney()
+                audio.pause()
+                audio = new Audio('music/track-1.mp3')
+        }
         
 
 
@@ -510,10 +558,6 @@
 
 
 // NOTE JS for DOM
-
-    // audio
-
-    let audio = document.getElementById('player')
 
     // Sound button mute on/off
 
@@ -550,6 +594,7 @@
         $('#play-button').click(function(){
             $('#start-screen').toggleClass('d-none')
             $('#matchup-screen').toggleClass('d-none')
+            initialize()
             matchUp()
             audioMatchup()
             audio.play()
@@ -574,7 +619,10 @@
                 upgrade()
             } else {
                 audioInsufficientMoney()
-                console.log('insufficient balance');
+                $('#insufficient').css('display', 'block')
+                setTimeout(function(){
+                    $('#insufficient').css('display', 'none')
+                },500)
             }
         }
 

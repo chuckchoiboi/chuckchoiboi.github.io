@@ -53,6 +53,22 @@ body {
   transform: translate(-50%, -50%);
 }
 
+#start-screen img {
+  margin: auto;
+}
+
+#start-screen h2 {
+  font-size: 20px;
+  text-align: center;
+  display: none;
+}
+
+#start-screen h3 {
+  font-size: 16px;
+  text-align: center;
+  display: none;
+}
+
 #play-button {
   margin-top: 15px;
 }
@@ -85,12 +101,12 @@ body {
   width: 23%;
   position: absolute;
   top: 55px;
-  left: 270px;
+  left: 280px;
 }
 
 #matchup-screen #game-play .round-banner {
   position: absolute;
-  top: 50px;
+  top: 40px;
   color: white;
 }
 
@@ -153,6 +169,52 @@ body {
 #matchup-screen #stage-display .current-round {
   background-color: #000;
   color: #fff;
+}
+
+#matchup-screen #game-play #rocky.ending {
+  -webkit-animation-name: ending;
+  -webkit-animation-duration: 4s;
+  animation-name: ending;
+  animation-duration: 4s;
+}
+@-webkit-keyframes ending {
+  from {
+    left: 100px;
+  }
+  to {
+    left: 210px;
+  }
+}
+@keyframes ending {
+  from {
+    left: 100px;
+  }
+  to {
+    left: 210px;
+  }
+}
+
+#matchup-screen #game-play #strange.disappear {
+  -webkit-animation-name: disappear;
+  -webkit-animation-duration: 4s;
+  animation-name: disappear;
+  animation-duration: 4s;
+}
+@-webkit-keyframes disappear {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes disappear {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 /* Upgrade Screen */
@@ -250,6 +312,23 @@ body {
 #upgrade-screen #right-column #money {
   height: 10%;
   text-align: center;
+}
+
+#insufficient {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 300px;
+  background: #fff;
+  color: #ff0000;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  border: 1px black solid;
+  border-radius: 20px;
+  display: none;
+  opacity: 0.8;
 }
 
 .progress {
