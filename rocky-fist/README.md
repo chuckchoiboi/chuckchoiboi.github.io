@@ -49,6 +49,21 @@ Making the gamePlay to render after each previous gamePlay rendering function wa
 
 Once the game starts, you will play against the opponent for multiple rounds. You will get money for every win, lose health for every loss, and nothing will happen for every draw. Every time you beat a round, you will get round completion reward. The goal of the game is to complete all 5 rounds. It gets harder every round, so upgrade Rocky's stats to get stronger and beat the game!
 
+### Win State:
+
+Go through all 5 stages without losing all health
+
+### Lose State:
+
+Losing all health, but game will continue by taking you to upgrade screen to improve player stats
+
+### Future Improvements:
+
+    - add an intro with a story, instruction, and skip button
+    - add visual changes to rocky's fist upon upgrades
+    - change characters as round progresses
+    - show #turns left per round
+
 ## App Demo
 
 [App Link](https://chuckchoiboi.github.io/rocky-fist/)
