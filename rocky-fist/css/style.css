@@ -73,6 +73,12 @@ body {
   margin-top: 15px;
 }
 
+/* Instruction Screen */
+
+#instruction-screen p {
+  font-size: 15px;
+}
+
 /* Matchup Screen */
 
 #matchup-screen {
@@ -98,9 +104,9 @@ body {
 }
 
 #matchup-screen #game-play #strange {
-  width: 23%;
+  width: 25%;
   position: absolute;
-  top: 55px;
+  top: 45px;
   left: 280px;
 }
 
@@ -112,6 +118,10 @@ body {
 
 #matchup-screen #game-play h2 {
   opacity: 0;
+}
+
+#matchup-screen #game-play h3 {
+  color: #ffffff;
 }
 
 #matchup-screen #game-play .victory {

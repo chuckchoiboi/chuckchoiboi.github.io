@@ -10,10 +10,18 @@
     // NOTE Audio
         // Background Audio
         let audio = new Audio('music/track-1.mp3')
-        audio.addEventListener('ended', function() {
-            this.currentTime = 0;
-            this.play();
-        }, false);
+        audio.loop = true
+        if (typeof audio.loop == 'boolean')
+        {
+            audio.loop = true;
+        }
+        else
+        {
+            audio.addEventListener('ended', function() {
+                this.currentTime = 0;
+                this.play();
+            }, false);
+        }
 
         // Game Start & Match Up
         const audioMatchup = function() {
@@ -64,10 +72,54 @@
             },
             kos: 0,
             currentRound: 1,
+            enemiesRemain: 1,
             animate: {
                 stopRocky: false,
             }
         }
+
+        enemyChar = [
+            {
+                body: 'img/chuck-body.png',
+                lost: 'img/chuck-lost.png',
+                wins: 'img/chuck-wins.png',
+                paper: 'img/chuck-paper.png',
+                scissors: 'img/chuck-scissors.png',
+                rock: 'img/chuck-rock.png'
+            },
+            {
+                body: 'img/creed-body.png',
+                lost: 'img/creed-lost.png',
+                wins: 'img/creed-wins.png',
+                paper: 'img/creed-paper.png',
+                scissors: 'img/creed-scissors.png',
+                rock: 'img/creed-rock.png'
+            },
+            {
+                body: 'img/volde-body.png',
+                lost: 'img/volde-lost.png',
+                wins: 'img/volde-wins.png',
+                paper: 'img/volde-paper.png',
+                scissors: 'img/volde-scissors.png',
+                rock: 'img/volde-rock.png'
+            },
+            {
+                body: 'img/darth-body.png',
+                lost: 'img/darth-lost.png',
+                wins: 'img/darth-wins.png',
+                paper: 'img/darth-paper.png',
+                scissors: 'img/darth-scissors.png',
+                rock: 'img/darth-rock.png'
+            },
+            {
+                body: 'img/strange-body.png',
+                lost: 'img/strange-lost.png',
+                wins: 'img/strange-wins.png',
+                paper: 'img/strange-paper.png',
+                scissors: 'img/strange-scissors.png',
+                rock: 'img/strange-rock.png'
+            }
+        ]
 
 
 
@@ -211,8 +263,8 @@
             generateEnemy(rounds.round1, 1);
             generateEnemy(rounds.round2, 3);
             generateEnemy(rounds.round3, 5);
-            generateEnemy(rounds.round4, 8);
-            generateEnemy(rounds.round5, 10);
+            generateEnemy(rounds.round4, 10);
+            generateEnemy(rounds.round5, 15);
         }
 
 
@@ -307,8 +359,10 @@
                 rocky.money.prizeRate = 25
                 rocky.kos = 0
                 rocky.currentRound = 1
+                rocky.enemiesRemain = 1
                 $('.upgrade-items').removeClass('max')
                 $('.fist').attr('src', 'img/glove.png').attr('width', '20px')
+                $('#strange').attr('src', 'img/chuck-body.png')
                 $('#rocky').removeClass('ending')
                 $('#strange').removeClass('disappear')
                 updateFistProgress()
@@ -335,6 +389,9 @@
             generateRounds()
             loopRounds()
             renderGame()
+            rocky.enemiesRemain = 1
+            renderEnemyCount()
+            $('#strange').attr('src', 'img/chuck-body.png')
         } 
 
 
@@ -347,8 +404,10 @@
                 // increases money.balance and fist.progress, calls updateMoney and updateFistProgress to manipulate DOM
 
             const renderFightWon = function() {
+                rocky.enemiesRemain -= 1
+                renderEnemyCount()
                 $('#rocky').attr('src', 'img/rocky-wins.png')
-                $('#strange').attr('src', 'img/strange-lost.png')
+                $('#strange').attr('src', `${enemyChar[rocky.currentRound-1].lost}`)
                 audioMoneyEarned()
                 if(rocky.fist.strength !== 2.5){
                     rocky.fist.progress += 1
@@ -365,8 +424,10 @@
                 // decreases rocky.health.remainingHealth, then calls updateHealth to manipulate DOM
 
             const renderFightLost = function() {
+                rocky.enemiesRemain -= 1
+                renderEnemyCount()
                 $('#rocky').attr('src', 'img/rocky-lost.png')
-                $('#strange').attr('src', 'img/strange-wins.png')
+                $('#strange').attr('src', `${enemyChar[rocky.currentRound-1].wins}`)
                 audioDamage()
                 rocky.health.remainingHealth -= 1
                 updateHealth()
@@ -377,19 +438,21 @@
             // renderFightDrawn
 
             const renderFightDrawn = function() {
+                rocky.enemiesRemain -= 1
+                renderEnemyCount()
                 $('#rocky').attr('src', 'img/rocky-body.png')
-                $('#strange').attr('src', 'img/strange-body.png')
+                $('#strange').attr('src', `${enemyChar[rocky.currentRound-1].body}`)
             }
 
             // renderEnemy
 
             const renderEnemy = function(enemy) {
                 if(enemy.fist === 0){
-                    $('#strange').attr('src', 'img/strange-scissors.png')
+                    $('#strange').attr('src', `${enemyChar[rocky.currentRound-1].scissors}`)
                 } else if (enemy.fist === 1) {
-                    $('#strange').attr('src', 'img/strange-rock.png')
+                    $('#strange').attr('src', `${enemyChar[rocky.currentRound-1].rock}`)
                 } else if (enemy.fist === 2) {
-                    $('#strange').attr('src', 'img/strange-paper.png')
+                    $('#strange').attr('src', `${enemyChar[rocky.currentRound-1].paper}`)
                 }
             }
 
@@ -405,7 +468,8 @@
                 moveChar($('#rocky'))
                 moveChar($('#strange'))
                 $('#rocky').attr('src', 'img/rocky-body.png')
-                $('#strange').attr('src', 'img/strange-body.png')
+                $('#strange').attr('src', `${enemyChar[rocky.currentRound-1].body}`)
+                renderEnemyCount()
             }
 
             // renderHands
@@ -413,19 +477,19 @@
             const renderHands1 = function() {
                 rocky.animate.stopRocky = true
                 $('#rocky').attr('src', 'img/rocky-rock.png')
-                $('#strange').attr('src', 'img/strange-scissors.png')
+                $('#strange').attr('src', `${enemyChar[rocky.currentRound-1].scissors}`)
             }
 
             const renderHands2 = function() {
                 rocky.animate.stopRocky = true
                 $('#rocky').attr('src', 'img/rocky-rock.png')
-                $('#strange').attr('src', 'img/strange-rock.png')
+                $('#strange').attr('src', `${enemyChar[rocky.currentRound-1].rock}`)
             }
 
             const renderHands3 = function() {
                 rocky.animate.stopRocky = true
                 $('#rocky').attr('src', 'img/rocky-rock.png')
-                $('#strange').attr('src', 'img/strange-paper.png')
+                $('#strange').attr('src', `${enemyChar[rocky.currentRound-1].paper}`)
             }
 
 
@@ -434,8 +498,17 @@
                 // stage complete message
 
             const renderRoundComplete = function() {
-                if(rocky.currentRound > 1){
+                if(rocky.currentRound !== 5) {
+                    rocky.currentRound ++ 
+                } else {
+                    return
+                }
+                if(rocky.currentRound > 1 && rocky.currentRound < 6){
                     $('.victory').text(`You get $${(rocky.currentRound)*rocky.money.prizeRate} for completing round# ${rocky.currentRound -1}!`)
+                    if(rocky.currentRound === 2) rocky.enemiesRemain = 3
+                    if(rocky.currentRound === 3) rocky.enemiesRemain = 5
+                    if(rocky.currentRound === 4) rocky.enemiesRemain = 10
+                    if(rocky.currentRound === 5) rocky.enemiesRemain = 15
                     animateRoundComplete()
                     rocky.money.balance += (rocky.currentRound)*rocky.money.prizeRate
                     updateMoney()
@@ -452,9 +525,14 @@
                 updateRound()
                 $('.round').text(`Round ${rocky.currentRound}`)
                 animateRound()
-                rocky.currentRound ++ 
             }        
 
+            // renderEnemyCount
+
+            const renderEnemyCount = function() {
+                const enemyCounts = [1, 3, 5, 10, 15]
+                $('#enemy-count').text(`${rocky.enemiesRemain} / ${enemyCounts[rocky.currentRound - 1]}`)
+            }
 
 
             // renderGame
@@ -478,7 +556,7 @@
                         setTimeout(function(){
                             switchScreen()
                             $('#rocky').attr('src', 'img/rocky-body.png')
-                            $('#strange').attr('src', 'img/strange-body.png')
+                            $('#strange').attr('src', `${enemyChar[rocky.currentRound-1].body}`)
                         }, 500)
                     } else if (counter + 1 === gamePlay.length + 1) {
                         clearInterval(i)
@@ -497,11 +575,11 @@
             // renderEnding
 
             const renderEnding = function() {
+                $('#enemy-count').text('')
                 rocky.animate.stopRocky = true;
                 $('#rocky').css('left', '100px')
                 $('#strange').css('left', '280px')
                 $('#rocky').attr('src', 'img/rocky-body.png')
-                $('#strange').attr('src', 'img/strange-body.png')
                 $('#rocky').addClass('ending')
                 $('#strange').addClass('disappear')
                 $('#start-screen h2, #start-screen h3').css('display', 'block')
@@ -597,11 +675,18 @@
 
             $('#play-button').click(function(){
                 $('#start-screen').toggleClass('d-none')
+                $('#instruction-screen').toggleClass('d-none')
+                audio.pause()
+            })
+
+            $('#start-button').click(function(){
+                $('#instruction-screen').toggleClass('d-none')
                 $('#matchup-screen').toggleClass('d-none')
                 initialize()
                 matchUp()
                 audioMatchup()
                 audio.play()
+                audio.loop = true;
             })
 
 

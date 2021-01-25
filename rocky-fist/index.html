@@ -26,7 +26,7 @@
 </head>
 <body>
     <!-- NOTE audio file start -->
-    <audio id="player" loop>
+    <audio id="player">
         <source src="music/track-1.mp3" type="audio/mpeg">
     </audio>
     <!-- NOTE audio file end -->
@@ -42,11 +42,29 @@
             <button id="play-button" class="btn btn-outline-dark btn-sm px-5">PLAY</button>
         </div>
 
+        <div id="instruction-screen" class="d-none d-flex flex-column position-absolute p-2">
+            <h2>How to play</h2>
+            <div>
+                <p>
+                    Rock Paper Scissors association decided to challenge Rocky on rounds of rock paper scissors. Rocky may be a great boxer, but not a great RPS player. He has a pride as a boxer though, so he will only play rock.
+                </p>
+                <p>
+                    You are Rocky's coach Mickey. Your job is to train Rocky to get strong, strong enough to beat this impossible challenge!
+                </p>
+                <p>
+                    Rocky will play against different opponents every round. Every win, he will be rewarded. Every loss, he will lose a life. Once Rocky loses all his health for the match, you will have a chance to train Rocky so don't let him give up. Keep fighting, until he gets to the top!
+                </p>
+            </div>
+            
+            <button id="start-button" class="btn btn-outline-dark btn-sm px-5">Start</button>
+        </div>
+
         <!-- NOTE Matchup Screen -->
         <div id="matchup-screen" class="d-flex justify-content-between flex-column container align-items-center d-none">
             <div id="game-play" class="row">
                 <img id="rocky" src="img/rocky-body.png" alt="">
-                <img id="strange" src="img/strange-body.png" alt="">
+                <img id="strange" src="img/chuck-body.png" alt="">
+                <h3 id="enemy-count">1 / 1</h3>
                 <div class="round-banner">
                     <h2 class="round">Round 1</h2>
                     <h2 class="fight">Fight!</h2>
