@@ -4,7 +4,7 @@ const passport = require('passport')
 
 // Root path redirect to /flights
 router.get('/', (req, res) => {
-    res.send('<h1>Hello World</h1>')
+    res.render('index')
 })
 
 // Google OAuth login route

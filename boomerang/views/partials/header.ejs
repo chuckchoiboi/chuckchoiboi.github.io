@@ -1,0 +1,10 @@
+<body>
+    <nav class="navbar">
+        <a href="/">Boomerang</a>
+        <!-- Login -->
+        <%# if (user) { %>
+            <!-- <a id="logout" href="/logout">Log Out</a> -->
+        <%# } else { %>
+                <a id="login" href="/auth/google">Login with Google</a>
+        <%# } %>
+    </nav>
