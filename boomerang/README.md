@@ -53,7 +53,7 @@
 
 ![entity-relationship-diagram](./project-detail/erd.JPG)
 
-Users
+User
 
 - Username: String, unique
 - Email: String, unique
@@ -61,15 +61,15 @@ Users
 - Answers selected: Number
 - Google ID: String
 
-Questions
+Question
 
-- Post Title: String
-- Post Body: String
+- Question Title: String
+- Question Body: String
 - Topics: Enum
-- Answers: String
+- Answers: [String]
 - Publish Date: Date ( timestamps: true )
 
-Comments
+Answer
 
 - Username: String
 - Answer Body: String
