@@ -15,7 +15,7 @@ const questionSchema = new Schema({
         type: String,
         required: true,
     },
-    topics: {
+    topic: {
         type: [String],
         enum: ['education', 'game', 'entertainment', 'art', 'lifestyle', 'health', 'politics', 'finance', 'travel', 'sports', 'shopping']
     },
