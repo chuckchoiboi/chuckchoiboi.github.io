@@ -1,0 +1,54 @@
+<%- include('../partials/base') %>
+<%- include('../partials/header') %>
+
+        <div class="profile-container d-flex m-auto">
+            <div class="left-column text-center m-2">
+
+                <img class="rounded" src=<%=user.avatarUrl %> alt="user-avatar">
+                <div class="recent-questions text-left">
+                    <span>Recent questions asked:</span>
+                    <a href="#">
+                        <p>Sample question 1</p>
+                    </a>
+                    <a href="#">
+                        <p>Sample question 2</p>
+                    </a>
+                    <a href="#">
+                        <p>Sample question 3</p>
+                    </a>
+                    <!-- use ejs to render the last 3 questions posted by the user -->
+                </div>
+
+            </div>
+            <div class="right-column m-2">
+
+                <div class="username">
+                    <div id="username-pre">
+                        <span>Username:</span>
+                        <p><%= user.username %> <button id="username-edit" class="btn btn-outline-danger py-0 px-2">edit</button></p>
+                    </div>
+                    <div id="username-editor" class="d-none">
+                        <span>Username:</span>
+                        <form action="/users/update/<%= user._id %>?_method=PUT" method="POST">
+                            <input type="text" name="username" value=<%= user.username %>>
+                            <input type="submit" value="Save">
+                        </form>
+                    </div>
+                </div>
+                <div class="email">
+                    <span>Email:</span>
+                    <p><%= user.email %></p>
+                </div>
+                <div class="q-asked">
+                    <span>Questions Asked:</span>
+                    <p><%= user.questionsAsked %></p>
+                </div>
+                <div class="a-selected">
+                    <span>Answers Selected:</span>
+                    <p><%= user.answersSelected %></p>
+                </div>
+
+            </div>
+        </div>
+
+<%- include('../partials/footer') %>

@@ -37,7 +37,25 @@ const updateUser = (req, res) => {
     
 }
 
+const showUser = (req, res) => {
+
+    const userId = req.params.id
+
+    db.User.findById(userId, (err, foundUser) => {
+        if(err) return console.log(err);
+        
+        const context = {
+            user: foundUser,
+        }
+
+        res.render('users/show', context)
+    })
+    
+}
+
 module.exports = {
     newUser,
-    updateUser
+    updateUser,
+    showUser,
+
 }

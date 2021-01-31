@@ -13,7 +13,9 @@ const ctrls = require('../controllers')
 
 router.get('/new', ctrls.users.newUser)
 
-router.put('/:id/edit', ctrls.users.updateUser)
+router.put('/update/:id', ctrls.users.updateUser)
+
+router.get('/show/:id', ctrls.users.showUser)
 
 
 module.exports = router

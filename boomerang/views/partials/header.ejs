@@ -6,7 +6,7 @@
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" id="user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= user.username %><img class="user-avatar" src=<%=user.avatarUrl %>></button>
                 <div class="dropdown-menu" aria-labelledby="user-dropdown">
-                    <a class="dropdown-item" href="/users/<%= user._id %>/show">Profile</a>
+                    <a class="dropdown-item" href="/users/show/<%= user._id %>">Profile</a>
                     <a class="dropdown-item" href="/logout">Logout</a>
                 </div>
             </div>
