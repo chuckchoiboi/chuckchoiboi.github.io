@@ -35,7 +35,13 @@ router.get('/oauth2callback', passport.authenticate(
             if(!foundUser.username) {
                 res.redirect('users/new')
             } else {
-                res.redirect(req.session.returnTo)
+
+                if(req.session.returnTo) {
+                    res.redirect(req.session.returnTo)
+                } else {
+                    res.redirect('/')
+                }
+
             }
             
         })
@@ -46,7 +52,11 @@ router.get('/oauth2callback', passport.authenticate(
 // OAuth logout route
 router.get('/logout', function(req, res){
     req.logout();
-    res.redirect(req.session.returnTo);
+    if(req.session.returnTo) {
+        res.redirect(req.session.returnTo)
+    } else {
+        res.redirect('/')
+    }
 });
 
 
