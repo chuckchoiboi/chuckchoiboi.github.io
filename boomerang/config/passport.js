@@ -10,21 +10,29 @@ passport.use(new GoogleStrategy({
     callbackURL: process.env.GOOGLE_CALLBACK
   },
   function(accessToken, refreshToken, profile, cb) {
+    
     User.findOne({ 'googleId': profile.id }, function(err, user) {
       if (err) return cb(err);
       if (user) {
         return cb(null, user);
       } else {
-        // we have a new student via OAuth!
-        const newUser = new User({
-          name: profile.displayName,
+        User.findOne({
           email: profile.emails[0].value,
-          googleId: profile.id
-        });
-        newUser.save(function(err) {
-          if (err) return cb(err);
-          return cb(null, newUser);
-        });
+        }, (err, foundUser) => {
+          if(err) return console.log(err);
+          if(foundUser) {
+            res.redirect('/auth/google')
+          } else {
+            const newUser = new User({
+            email: profile.emails[0].value,
+            googleId: profile.id
+            });
+            newUser.save(function(err) {
+              if (err) return cb(err);
+              return cb(null, newUser);
+            });
+          }
+        })
       }
     });
   }

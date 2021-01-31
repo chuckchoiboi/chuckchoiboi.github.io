@@ -1,10 +1,10 @@
 <%- include('../partials/base') %>
 <%- include('../partials/header') %>
 
-        <form action="/users/add" method="POST">
+        <form action="/users/<%= user._id %>/edit?_method=PUT" method="POST">
             <div class="form-group d-flex">
-
-
+                <input type="email" name="email" readonly value=<%= user.email %>>
+                <input class="form-control mx-1" type="text" name="username" minlength="5" maxlength="15" placeholder="Username">
                 <input class="btn btn-primary mx-2" type="submit" value="Create Account">
             </div>
         </form>

@@ -13,7 +13,7 @@ const PORT = 3000;
 
 /* NOTE Authentication */
 require('dotenv').config()
-// require('./config/passport'); //need to create User model
+require('./config/passport'); //need to create User model
 
 
 /* NOTE App Instance */
@@ -41,7 +41,7 @@ app.use( passport.session() );
 app.use('/', routes.index)
 
 // users
-// app.use('/users', routes.users )
+app.use('/users', routes.users )
 
 // questions
 // app.use('/questions', routes.questions )

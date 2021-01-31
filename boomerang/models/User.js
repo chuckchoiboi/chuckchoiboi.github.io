@@ -10,7 +10,6 @@ const userSchema = new Schema({
         type: String,
         unique: true,
     },
-    name: String,
     questionsAsked: {
         type: Number,
         default: 0

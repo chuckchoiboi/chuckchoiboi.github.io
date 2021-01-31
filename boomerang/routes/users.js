@@ -7,7 +7,13 @@ const returnPath = (req, res, next) => {
     next()
 }
 
-// const ctrls = require('../controllers')
+const ctrls = require('../controllers')
+
+// http://localhost:3000/users
+
+router.get('/new', ctrls.users.newUser)
+
+router.put('/:id/edit', ctrls.users.updateUser)
 
 
 module.exports = router
