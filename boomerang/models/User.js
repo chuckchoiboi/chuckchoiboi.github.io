@@ -10,6 +10,9 @@ const userSchema = new Schema({
         type: String,
         unique: true,
     },
+    avatarUrl: {
+        type: String,
+    },
     questionsAsked: {
         type: Number,
         default: 0

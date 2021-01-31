@@ -11,11 +11,14 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, cb) {
     
-    User.findOne({ 'googleId': profile.id }, function(err, user) {
+    User.findOne({ 'googleId': profile.id }, (err, user) => {
+      
       if (err) return cb(err);
+
       if (user) {
         return cb(null, user);
       } else {
+
         User.findOne({
           email: profile.emails[0].value,
         }, (err, foundUser) => {
@@ -25,7 +28,8 @@ passport.use(new GoogleStrategy({
           } else {
             const newUser = new User({
             email: profile.emails[0].value,
-            googleId: profile.id
+            googleId: profile.id,
+            avatarUrl: profile._json.picture,
             });
             newUser.save(function(err) {
               if (err) return cb(err);
@@ -33,9 +37,11 @@ passport.use(new GoogleStrategy({
             });
           }
         })
+
       }
     });
   }
+
 ));
 
 passport.serializeUser(function(user, done) {
