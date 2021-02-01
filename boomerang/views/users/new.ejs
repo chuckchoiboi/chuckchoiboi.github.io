@@ -1,6 +1,6 @@
 <%- include('../partials/base') %>
 <%- include('../partials/header') %>
-
+    <div class="container">
         <form action="/users/update/<%= user._id %>?_method=PUT" method="POST">
             <div class="form-group d-flex">
                 <input type="email" name="email" readonly value=<%= user.email %>>
@@ -8,5 +8,6 @@
                 <input class="btn btn-primary mx-2" type="submit" value="Create Account">
             </div>
         </form>
+    </div>
 
 <%- include('../partials/footer') %>
