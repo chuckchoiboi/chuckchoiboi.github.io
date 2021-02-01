@@ -1,21 +1,21 @@
 <%- include('../partials/base') %>
 <%- include('../partials/header') %>
-
-        <form action="questions/add" method="POST">
+    <div class="container">
+        <form action="/questions/add" method="POST">
             <div class="form-group">
                 <input class="form-control mx-1" type="text" name="questionTitle" maxlength="60" placeholder="Title" required>
-                <textarea class="form-control mx-1" type="text" name="questionBody" maxlength="60" placeholder="Question..." required>
-                </textarea>
+                <textarea class="form-control mx-1" type="text" name="questionBody" maxlength="60" placeholder="Question" required></textarea>
                 
                 <div class="topic">
                     <label for="topic">Topic:</label>
                     <select id="topic" name="topic">
-                        <option value="topic1">Topic1</option>
+                        <option value="education">education</option>
                     </select>
                 </div>
 
                 <input class="btn btn-primary mx-2" type="submit" value="Post Question">
             </div>
         </form>
+    </div>
 
 <%- include('../partials/footer') %>

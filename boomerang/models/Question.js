@@ -6,6 +6,9 @@ const questionSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: 'User'
     },
+    authorUsername: {
+        type: String,
+    },
     questionTitle: {
         type: String,
         required: true,

@@ -1,0 +1,31 @@
+<%- include('../partials/base') %>
+<%- include('../partials/header') %>
+
+<div class="question-card container">
+    <div class="question-card-header">
+        <h1 class="question-title"><%= question.questionTitle %></h1>
+    </div>
+    <div class="question-card-main">
+        <div class="author d-flex">
+            <span class="mr-2">Author:</span>
+            <span><%= question.authorUsername %></span>
+        </div>
+        <div class="published d-flex">
+            <span class="mr-2">Published: </span>
+            <span><%= question.createdAt %></span>
+        </div>
+        <div class="topics d-flex">
+            <% question.topic.forEach(element => { %>
+            <a href="#"><%= element %> </a>
+            <% }) %>
+        </div>
+        <div class="question-body d-flex">
+            <p>
+                <%= question.questionBody %>
+            </p>
+        </div>
+        <button id="answer-trigger" class="btn btn-outline-success">Answer question</button>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

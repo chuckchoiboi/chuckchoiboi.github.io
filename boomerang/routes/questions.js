@@ -7,7 +7,15 @@ const returnPath = (req, res, next) => {
     next()
 }
 
-// const ctrls = require('../controllers')
+const ctrls = require('../controllers')
+
+// http://localhost:3000/questions
+
+router.get('/new', ctrls.questions.newQuestion)
+router.post('/add', ctrls.questions.createQuestion)
+router.get('/show/:id', ctrls.questions.showQuestion)
+
+
 
 
 module.exports = router

@@ -44,7 +44,7 @@ app.use('/', routes.index)
 app.use('/users', routes.users )
 
 // questions
-// app.use('/questions', routes.questions )
+app.use('/questions', routes.questions )
 
 /* NOTE App Listening */
 app.listen(PORT, () => {

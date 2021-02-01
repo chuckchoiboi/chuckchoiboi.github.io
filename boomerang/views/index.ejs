@@ -1,4 +1,11 @@
 <%- include('./partials/base') %>
 <%- include('./partials/header') %>
-<h1>Hello World!</h1>
+<div class="container">
+    <h1>Welcome to Boomerang</h1>
+    <% if (user) { %>
+    <a href="/questions/new">
+        <p>Ask away, it will come back...</p>
+    </a>
+    <% } %>
+</div>
 <%- include('./partials/footer') %>
