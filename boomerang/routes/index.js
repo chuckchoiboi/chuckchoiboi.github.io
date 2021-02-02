@@ -65,5 +65,5 @@ router.get('/logout', function(req, res){
 module.exports = {
     index: router,
     questions: require('./questions'),
-    users: require('./users')
+    users: require('./users'),
 }

@@ -28,4 +28,44 @@
     </div>
 </div>
 
+<div id="answer-form" class="container d-none">
+    <form action="/questions/answers/add/<%= question._id %>" method="POST">
+        <textarea class="form-control mx-1" type="text" name="answerBody" maxlength="200" placeholder="Answer to the question goes here..." required></textarea>
+        <input type="submit" value="Answer">
+    </form>
+</div>
+
+<% if (question.answers.length) { %>
+    <% answers.forEach(answer=> { %>
+        <div class="answer-card container">
+            <div class="container">
+                <div class="round">
+                    <input type="checkbox" id="checkbox" />
+                    <label for="checkbox"></label>
+                </div>
+            </div>
+            <div class="answer-card-main">
+                <div class="author d-flex">
+                    <span class="mr-2">Author:</span>
+                    <span>
+                        <%= answer.authorUsername %>
+                    </span>
+                </div>
+                <div class="published d-flex">
+                    <span class="mr-2">Published: </span>
+                    <span>
+                        <%= answer.createdAt %>
+                    </span>
+                </div>
+                <div class="answer-body d-flex">
+                    <p>
+                        <%= answer.answerBody %>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+            <% } %>
+
+
 <%- include('../partials/footer') %>

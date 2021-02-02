@@ -1,4 +1,4 @@
 module.exports = {
     users: require('./users'),
-    questions: require('./questions')
+    questions: require('./questions'),
 }

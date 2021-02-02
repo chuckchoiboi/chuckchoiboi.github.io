@@ -14,6 +14,7 @@ const ctrls = require('../controllers')
 router.get('/new', ctrls.questions.newQuestion)
 router.post('/add', ctrls.questions.createQuestion)
 router.get('/show/:id', ctrls.questions.showQuestion)
+router.post('/answers/add/:id', ctrls.questions.addAnswer)
 
 
 

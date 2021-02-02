@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const questionSchema = new Schema({
-    author: {
+    authorId: {
         type: mongoose.Types.ObjectId,
         ref: 'User'
     },
@@ -12,7 +12,7 @@ const questionSchema = new Schema({
     questionTitle: {
         type: String,
         required: true,
-        maxLength: 60
+        maxLength: 200
     },
     questionBody: {
         type: String,
@@ -22,6 +22,10 @@ const questionSchema = new Schema({
         type: [String],
         enum: ['education', 'game', 'entertainment', 'art', 'lifestyle', 'health', 'politics', 'finance', 'travel', 'sports', 'shopping']
     },
+    answers: {
+        type: [mongoose.Types.ObjectId],
+        ref: 'Answer'
+    }
 
 }, {
     timestamps: true
