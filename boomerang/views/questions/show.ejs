@@ -48,12 +48,12 @@
 </div>
 
 <% if (question.answers.length) { %>
-    <% answers.forEach(answer=> { %>
+    <% answers.forEach((answer, idx)=> { %>
         <div class="answer-card container">
             <div class="container">
                 <div class="round">
-                    <input type="checkbox" id="checkbox" />
-                    <label for="checkbox"></label>
+                    <input type="checkbox" id='checkbox<%= idx %>' />
+                    <label for="checkbox<%= idx %>"></label>
                 </div>
             </div>
             <div class="answer-card-main">
