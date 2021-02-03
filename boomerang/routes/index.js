@@ -4,10 +4,8 @@ const passport = require('passport')
 const db = require('../config/database')
 
 // middleware to redirect oauth login/logout to referrer
-const returnPath = (req, res, next) => {
-    req.session.returnTo = req.originalUrl
-    next()
-}
+const returnPath = require('../middleware/returnPath')
+const authRequired = require('../middleware/authRequired')
 
 // presentational for http://localhost:3000/
 router.get('/', returnPath, (req, res) => {

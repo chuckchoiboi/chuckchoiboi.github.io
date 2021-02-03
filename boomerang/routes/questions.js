@@ -2,10 +2,8 @@ const express = require('express')
 const router = express.Router()
 
 // middleware added to get requests to return oauth authentication to referrer
-const returnPath = (req, res, next) => {
-    req.session.returnTo = req.originalUrl
-    next()
-}
+const returnPath = require('../middleware/returnPath')
+const authRequired = require('../middleware/authRequired')
 
 const ctrls = require('../controllers')
 
@@ -14,7 +12,7 @@ const ctrls = require('../controllers')
 router.get('/new', ctrls.questions.newQuestion)
 router.post('/add', ctrls.questions.addQuestion)
 router.get('/show/:id', ctrls.questions.showQuestion)
-router.post('/answers/add/:id', ctrls.questions.addAnswer)
+router.post('/answers/add/:id', authRequired, ctrls.questions.addAnswer)
 
 
 
