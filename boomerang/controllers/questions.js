@@ -32,11 +32,20 @@ const showQuestion = (req, res) => {
 
         db.Answer.find({questionId: id}, (err, foundAnswers) => {
             if(err) return console.log(err);
+
+            let answerSelected = false
+
+            foundAnswers.forEach(answer => {
+                if (answer.selected) answerSelected = true 
+            })
+
+            console.log(answerSelected);
             
             const context = {
                 user: req.user,
                 question: foundQuestion,
-                answers: foundAnswers
+                answers: foundAnswers,
+                answerSelected: answerSelected
             }            
 
             res.render('questions/show', context)
@@ -78,18 +87,18 @@ const selectAnswer = (req, res) => {
     db.Answer.findById(req.params.id, (err, foundAnswer) => {
         
         if(err) return console.log(err);
-        
-        console.log(foundAnswer);
 
         if(foundAnswer.selected) {
             foundAnswer.selected = false
-            db.User.findByIdAndUpdate(foundAnswer.authorId, {$inc: {'answersSelected' : 1}}).exec()
+            foundAnswer.save()
+            db.User.findByIdAndUpdate(foundAnswer.authorId, {$inc: {'answersSelected' : -1}}).exec()
         } else {
             foundAnswer.selected = true
-            db.User.findByIdAndUpdate(foundAnswer.authorId, {$inc: {'answersSelected' : -1}}).exec()
+            foundAnswer.save()
+            db.User.findByIdAndUpdate(foundAnswer.authorId, {$inc: {'answersSelected' : 1}}).exec()
         }
 
-        foundAnswer.save()
+        res.redirect(`/questions/show/${foundAnswer.questionId}`)
 
     })
 

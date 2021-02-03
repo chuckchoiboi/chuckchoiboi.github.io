@@ -15,6 +15,11 @@
 }
 
 /***** checkbox style *****/
+
+.answer-not-selected {
+  display: none;
+}
+
 .round {
   position: relative;
 }
@@ -49,11 +54,11 @@
   visibility: hidden;
 }
 
-.round input[type='checkbox']:checked + label {
+.answer-selected .round input[type='checkbox'] + label {
   background-color: #66bb6a;
   border-color: #66bb6a;
 }
 
-.round input[type='checkbox']:checked + label:after {
+.answer-selected .round input[type='checkbox'] + label:after {
   opacity: 1;
 }
