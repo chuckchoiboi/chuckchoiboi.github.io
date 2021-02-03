@@ -53,10 +53,12 @@
             <% if(user) { %> 
                 <% if (user._id.equals(question.authorId)) { %>
                 <div class="answer-selector container" id="answer-selector<%= idx %>">
+                    <form action="/questions/answers/select/update/<%= answer._id %>?_method=PUT" method="POST">
                     <div class="round">
-                        <input type="checkbox" class="answer-selector-checkbox" id="checkbox<%= idx %>" />
+                        <input type="checkbox" class="answer-selector-checkbox" id="checkbox<%= idx %>" onChange="this.form.submit()" />
                         <label for="checkbox<%= idx %>"></label>
                     </div>
+                    </form>
                 </div>
                 <% } %>
             <% } %> 

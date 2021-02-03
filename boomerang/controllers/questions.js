@@ -74,9 +74,29 @@ const addAnswer = (req, res) => {
 
 }
 
+const selectAnswer = (req, res) => {
+    db.Answer.findById(req.params.id, (err, foundAnswer) => {
+        
+        if(err) return console.log(err);
+        
+        foundAnswer.selected
+
+        if(foundAnswer.selected) {
+            foundAnswer.selected = false
+        } else {
+            foundAnswer.selected = true
+        }
+
+        foundAnswer.save()
+
+    })
+
+}
+
 module.exports = {
     newQuestion,
     addQuestion,
     showQuestion,
     addAnswer,
+    selectAnswer,
 }
