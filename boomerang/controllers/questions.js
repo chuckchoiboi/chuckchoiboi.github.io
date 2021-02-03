@@ -9,7 +9,7 @@ const newQuestion = (req, res) => {
     res.render('questions/new', context)
 }
 
-const createQuestion = (req, res) => {
+const addQuestion = (req, res) => {
 
     req.body.authorId = req.user._id
     req.body.authorUsername = req.user.username
@@ -77,7 +77,7 @@ const addAnswer = (req, res) => {
 
 module.exports = {
     newQuestion,
-    createQuestion,
+    addQuestion,
     showQuestion,
     addAnswer,
 }
