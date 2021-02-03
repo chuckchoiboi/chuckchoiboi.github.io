@@ -1,11 +1,39 @@
 <%- include('./partials/base') %>
 <%- include('./partials/header') %>
-<div class="container">
-    <h1>Welcome to Boomerang</h1>
-    <% if (user) { %>
-    <a href="/questions/new">
-        <p>Ask away, it will come back...</p>
-    </a>
-    <% } %>
+<div class="homepage container">
+    <div class="header">
+        <h1>Welcome to Boomerang</h1>
+        <% if (user) { %>
+        <a href="/questions/new">
+            <p>Ask away, it will come back...</p>
+        </a>
+        <% } %>
+    </div>
+
+    <div class="question-module">
+        <div class="question-title">
+            <h2>
+                How many eggs should I eat a day?
+            </h2>
+        </div>
+        <div class="question-body">
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, ea ullam doloribus voluptates voluptate tempore minima aliquam enim maiores magni recusandae unde mollitia repellendus dolor vero impedit accusamus. Laudantium, sit.
+            </p>
+        </div>
+        <div class="answers-group d-flex">
+            <div class="answer-selection mx-2">
+                <span>
+                    Answer Unselected
+                </span>
+            </div>
+            <div class="answer-numbers mx-2">
+                <span>
+                    Answers: 3
+                </span>
+            </div>
+        </div>
+    </div>
+
 </div>
 <%- include('./partials/footer') %>
