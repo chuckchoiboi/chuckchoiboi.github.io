@@ -50,12 +50,16 @@
 <% if (question.answers.length) { %>
     <% answers.forEach((answer, idx)=> { %>
         <div class="answer-card container">
-            <div class="container">
-                <div class="round">
-                    <input type="checkbox" id='checkbox<%= idx %>' />
-                    <label for="checkbox<%= idx %>"></label>
+            <% if(user) { %> 
+                <% if (user._id.equals(question.authorId)) { %>
+                <div class="answer-selector container">
+                    <div class="round">
+                        <input type="checkbox" id='checkbox<%= idx %>' />
+                        <label for="checkbox<%= idx %>"></label>
+                    </div>
                 </div>
-            </div>
+                <% } %>
+            <% } %> 
             <div class="answer-card-main">
                 <div class="author d-flex">
                     <span class="mr-2">Author:</span>
