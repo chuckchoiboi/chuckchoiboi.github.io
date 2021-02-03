@@ -37,8 +37,7 @@ const showQuestion = (req, res) => {
                 user: req.user,
                 question: foundQuestion,
                 answers: foundAnswers
-            }
-            
+            }            
 
             res.render('questions/show', context)
         })

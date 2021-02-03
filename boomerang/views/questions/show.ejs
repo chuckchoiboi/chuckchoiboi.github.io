@@ -24,7 +24,13 @@
                 <%= question.questionBody %>
             </p>
         </div>
+        <% if (user) { %>
+            <% if (!user._id.equals(question.authorId)) { %>
+                <button id="answer-trigger" class="btn btn-outline-success">Answer question</button>
+            <% } %>
+        <% } else { %>
         <button id="answer-trigger" class="btn btn-outline-success">Answer question</button>
+        <% } %>
     </div>
 </div>
 
