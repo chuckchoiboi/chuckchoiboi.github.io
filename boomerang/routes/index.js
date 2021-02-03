@@ -9,13 +9,16 @@ const returnPath = (req, res, next) => {
     next()
 }
 
-// Root path redirect to /flights
+// presentational for http://localhost:3000/
 router.get('/', returnPath, (req, res) => {
-    const context = {
-        user: req.user
-    }
-
-    res.render('index', context)
+    db.Question.find({}).sort({createdAt: 'desc'}).exec((err, foundQuestions) => {
+        if(err) return console.log(err);
+        const context = {
+            user: req.user,
+            questions: foundQuestions,
+        }
+        res.render('index', context)
+    })
 })
 
 // Google OAuth login route
