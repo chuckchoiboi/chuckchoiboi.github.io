@@ -9,8 +9,8 @@ const ctrls = require('../controllers')
 
 // http://localhost:3000/questions
 
-router.get('/new', ctrls.questions.newQuestion)
-router.post('/add', ctrls.questions.addQuestion)
+router.get('/new', authRequired, ctrls.questions.newQuestion)
+router.post('/add', authRequired, ctrls.questions.addQuestion)
 router.get('/show/:id', ctrls.questions.showQuestion)
 router.post('/answers/add/:id', authRequired, ctrls.questions.addAnswer)
 

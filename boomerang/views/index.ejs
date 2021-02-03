@@ -3,11 +3,9 @@
 <div class="homepage container">
     <div class="header">
         <h1>Welcome to Boomerang</h1>
-        <% if (user) { %>
         <a href="/questions/new">
             <p>Ask away, it will come back...</p>
         </a>
-        <% } %>
     </div>
 
     <% questions.forEach(question => { %>
@@ -24,12 +22,12 @@
             <span><a href="/questions/show/<%= question._id %> ">Read more</a></span>
         </div>
         <div class="answers-group d-flex">
-            <div class="answer-selection mx-2">
+            <div class="answer-selection mr-2">
                 <span>
                     Answer Unselected
                 </span>
             </div>
-            <div class="answer-numbers mx-2">
+            <div class="answer-numbers ml-2">
                 <span>
                     Answers: <%= question.answers.length %> 
                 </span>

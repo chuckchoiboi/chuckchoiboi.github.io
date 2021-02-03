@@ -36,8 +36,14 @@
 
 <div id="answer-form" class="container d-none">
     <form action="/questions/answers/add/<%= question._id %>" method="POST">
-        <textarea class="form-control mx-1" type="text" name="answerBody" maxlength="200" placeholder="Answer to the question goes here..." required></textarea>
+        <% if (!user) { %>
+        <textarea class="form-control" type="text" name="answerBody" maxlength="200"
+            placeholder="Please login to answer the question" disabled></textarea>
+        <input type="submit" value="Login using Google">
+        <% } else {%>
+        <textarea class="form-control" type="text" name="answerBody" maxlength="200" placeholder="Answer to the question goes here..." required></textarea>
         <input type="submit" value="Answer">
+        <% }%>
     </form>
 </div>
 
