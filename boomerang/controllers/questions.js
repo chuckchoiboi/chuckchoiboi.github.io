@@ -79,12 +79,14 @@ const selectAnswer = (req, res) => {
         
         if(err) return console.log(err);
         
-        foundAnswer.selected
+        console.log(foundAnswer);
 
         if(foundAnswer.selected) {
             foundAnswer.selected = false
+            db.User.findByIdAndUpdate(foundAnswer.authorId, {$inc: {'answersSelected' : 1}}).exec()
         } else {
             foundAnswer.selected = true
+            db.User.findByIdAndUpdate(foundAnswer.authorId, {$inc: {'answersSelected' : -1}}).exec()
         }
 
         foundAnswer.save()
