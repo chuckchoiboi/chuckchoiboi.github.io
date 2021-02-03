@@ -23,9 +23,15 @@
         </div>
         <div class="answers-group d-flex">
             <div class="answer-selection mr-2">
+                <% if (question.answerSelected) { %>
+                <span>
+                    Answer Selected
+                </span>
+                <% } else { %>
                 <span>
                     Answer Unselected
                 </span>
+                <% } %> 
             </div>
             <div class="answer-numbers ml-2">
                 <span>

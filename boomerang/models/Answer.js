@@ -19,7 +19,8 @@ const answerSchema = new Schema({
         maxLength: 200,
     },
     selected: {
-        type: Boolean
+        type: Boolean,
+        default: false,
     },
 
 }, {

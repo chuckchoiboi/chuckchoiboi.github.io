@@ -25,6 +25,10 @@ const questionSchema = new Schema({
     answers: {
         type: [mongoose.Types.ObjectId],
         ref: 'Answer'
+    },
+    answerSelected: {
+        type: Boolean,
+        default: false,
     }
 
 }, {

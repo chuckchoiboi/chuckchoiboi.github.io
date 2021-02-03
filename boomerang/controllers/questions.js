@@ -91,11 +91,23 @@ const selectAnswer = (req, res) => {
         if(foundAnswer.selected) {
             foundAnswer.selected = false
             foundAnswer.save()
-            db.User.findByIdAndUpdate(foundAnswer.authorId, {$inc: {'answersSelected' : -1}}).exec()
+            db.User.findByIdAndUpdate(foundAnswer.authorId, {$inc: {'answersSelected' : -1}}, (err, foundUser) => {
+                if (err) return console.log(err);
+            })
+            console.log(foundAnswer.questionId);
+            db.Question.findByIdAndUpdate(foundAnswer.questionId, {'answerSelected': false}, (err, foundQuestion) => {
+                if(err) return console.log(err);
+            }) 
         } else {
             foundAnswer.selected = true
             foundAnswer.save()
-            db.User.findByIdAndUpdate(foundAnswer.authorId, {$inc: {'answersSelected' : 1}}).exec()
+            db.User.findByIdAndUpdate(foundAnswer.authorId, {$inc: {'answersSelected' : 1}}, (err, foundUser) => {
+                if (err) return console.log(err);
+            })
+            console.log(foundAnswer.questionId);
+            db.Question.findByIdAndUpdate(foundAnswer.questionId, {'answerSelected': true}, (err, foundQuestion) => {
+                if(err) return console.log(err);
+            })
         }
 
         res.redirect(`/questions/show/${foundAnswer.questionId}`)

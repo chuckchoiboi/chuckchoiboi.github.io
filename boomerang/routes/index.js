@@ -11,6 +11,7 @@ const authRequired = require('../middleware/authRequired')
 router.get('/', returnPath, (req, res) => {
     db.Question.find({}).sort({createdAt: 'desc'}).exec((err, foundQuestions) => {
         if(err) return console.log(err);
+
         const context = {
             user: req.user,
             questions: foundQuestions,
