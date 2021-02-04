@@ -9,6 +9,26 @@ const authRequired = require('../middleware/authRequired')
 
 // presentational for http://localhost:3000/
 router.get('/', returnPath, (req, res) => {
+
+    // code for filters
+    const isEmpty = (object) => {
+        return Object.keys(object).length === 0 && object.constructor === Object
+    }
+
+    const filter = {}
+    if(req.query.search){
+        filter.search = req.query.search
+    }
+    if(req.query.filterDate){
+        filter.date = req.query.filterDate*-1
+    }
+    if(req.query.filterEngagement){
+        filter.engagement = req.query.filterEngagement*-1
+    }
+    if(req.query.topic){
+        filter.topic = req.query.topic
+    }
+
     db.Question.find({}).sort({createdAt: 'desc'}).exec((err, foundQuestions) => {
         if(err) return console.log(err);
 

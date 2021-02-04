@@ -7,6 +7,53 @@
             <p>Ask away, it will come back...</p>
         </a>
     </div>
+    <div class="questions-filter-wrapper">
+        <div class="questions-searchbar">
+            <form action="/">
+                <input name="search" type="text" placeholder="What are you looking for?">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+        </div>
+        <div class="questions-filter d-flex">
+            <div class="questions-filter-date">
+                <form action="/">
+                    <input name="filterDate" type="hidden" value="1">
+                    <button type="submit" class="btn btn-default">Date</button>
+                </form>
+            </div>
+            <div class="questions-filter-engagement">
+                <form action="/">
+                    <input name="filterEngagement" type="hidden" value="-1">
+                    <button type="submit" class="btn btn-default">Engagement</button>
+                </form>
+            </div>
+            <div class="questions-filter-engagement">
+                <form action="/">
+
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="topic-filter" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            Topic
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="topic-filter">
+                            <a class="dropdown-item" href="?topic=art">art</a>
+                            <a class="dropdown-item" href="?topic=education">education</a>
+                            <a class="dropdown-item" href="?topic=entertainment">entertainment</a>
+                            <a class="dropdown-item" href="?topic=finance">finance</a>
+                            <a class="dropdown-item" href="?topic=food">food</a>
+                            <a class="dropdown-item" href="?topic=game">game</a>
+                            <a class="dropdown-item" href="?topic=health">health</a>
+                            <a class="dropdown-item" href="?topic=lifestyle">lifestyle</a>
+                            <a class="dropdown-item" href="?topic=politics">politics</a>
+                            <a class="dropdown-item" href="?topic=shopping">shopping</a>
+                            <a class="dropdown-item" href="?topic=sports">sports</a>
+                            <a class="dropdown-item" href="?topic=travel">travel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <% questions.forEach(question => { %>
     <div class="question-module my-5">
