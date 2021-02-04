@@ -20,7 +20,7 @@ const questionSchema = new Schema({
     },
     topic: {
         type: [String],
-        enum: ['education', 'game', 'entertainment', 'art', 'lifestyle', 'health', 'politics', 'finance', 'travel', 'sports', 'shopping']
+        enum: ['education', 'game', 'entertainment', 'art', 'lifestyle', 'health', 'politics', 'finance', 'travel', 'sports', 'shopping', 'food']
     },
     answers: {
         type: [mongoose.Types.ObjectId],
