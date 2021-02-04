@@ -17,13 +17,22 @@
         <div class="questions-filter d-flex">
             <div class="questions-filter-date">
                 <form action="/">
-                    <input name="filterDate" type="hidden" value="1">
-                    <button type="submit" class="btn btn-default">Date</button>
+                    <% if (sort.filter === 'sortDate') { %>
+                        <input name="filterDate" type="hidden" value=<%= sort.val %> >
+                        <button type="submit" class="btn btn-default">Date</button>
+                    <% } else {%>
+                        <input name="filterDate" type="hidden" value='-1' >
+                        <button type="submit" class="btn btn-default">Date</button>
+                    <% } %> 
                 </form>
             </div>
             <div class="questions-filter-engagement">
                 <form action="/">
-                    <input name="filterEngagement" type="hidden" value="-1">
+                    <% if (sort.filter === 'sortEngagement' ) { %>
+                    <input name="filterEngagement" type="hidden" value=<%= sort.val %> >
+                    <% } else {%>
+                    <input name="filterEngagement" type="hidden" value="1">
+                    <% } %>
                     <button type="submit" class="btn btn-default">Engagement</button>
                 </form>
             </div>

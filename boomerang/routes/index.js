@@ -29,15 +29,59 @@ router.get('/', returnPath, (req, res) => {
         filter.topic = req.query.topic
     }
 
-    db.Question.find({}).sort({createdAt: 'desc'}).exec((err, foundQuestions) => {
-        if(err) return console.log(err);
+    if(isEmpty(filter)) {
+        db.Question.find({}).sort({createdAt: '-1'}).exec((err, foundQuestions) => {
+            if(err) return console.log(err);
+    
+            const context = {
+                user: req.user,
+                questions: foundQuestions,
+                sort: {}
+            }
+            res.render('index', context)
+        })
+    } else {
+        // date and enagement filter query
+        if(filter.date || filter.engagement) {
+            const sortFilter = filter.date ? {createdAt: filter.date} : {numOfAnswers: filter.engagement}
 
-        const context = {
-            user: req.user,
-            questions: foundQuestions,
+            db.Question.find({}).sort(sortFilter).exec((err, foundQuestions) => {
+                if(err) return console.log(err);
+        
+                const context = {
+                    user: req.user,
+                    questions: foundQuestions,
+                    sort: {}
+                }
+                if(filter.date) {
+                    context.sort.filter = 'sortDate'
+                    context.sort.val = filter.date
+                } else {
+                    context.sort.filter = 'sortEngagement'
+                    context.sort.val = filter.engagement
+                }
+
+                res.render('index', context)
+            })
+
+        } else if (filter.topic) {
+            const topic = filter.topic
+
+            db.Question.find({topic: topic}, (err, foundQuestions) => {
+                const context = {
+                    user: req.user,
+                    questions: foundQuestions,
+                    sort: {
+                        filter: 'sortTopic',
+                        val: topic
+                    }
+                }
+                res.render('index', context)
+            })
+
         }
-        res.render('index', context)
-    })
+    }
+
 })
 
 // Google OAuth login route

@@ -76,7 +76,7 @@ const addAnswer = (req, res) => {
     db.Answer.create(data, (err, createdAnswer) => {
         
         db.Question.findByIdAndUpdate(createdAnswer.questionId, {
-            $push: { answers: createdAnswer._id }
+            $push: { answers: createdAnswer._id }, $inc: { numOfAnswers: 1}
         }, (err, updated) => {
             if(err) return console.log(err);
             res.redirect(`/questions/show/${createdAnswer.questionId}`)
