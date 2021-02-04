@@ -1,15 +1,3 @@
-.dropdown > button {
-  cursor: none;
-}
-
-.dropdown:hover > .dropdown-menu {
-  display: block;
-}
-
-.dropdown > .dropdown-toggle:active {
-  pointer-events: none;
-}
-
 .profile-container {
   width: 15vw;
 }
