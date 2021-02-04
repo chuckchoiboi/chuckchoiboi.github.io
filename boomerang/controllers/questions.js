@@ -19,7 +19,11 @@ const addQuestion = (req, res) => {
 
     db.Question.create(data, (err, createdQuestion) => {
         if(err) return console.log(err);
-        res.redirect(`/questions/show/${createdQuestion._id}`)
+
+        db.User.findByIdAndUpdate(data.authorId, {$inc: {'questionsAsked' : 1}}, (err, foundUser) => {
+                if (err) return console.log(err);
+                res.redirect(`/questions/show/${createdQuestion._id}`)
+            })
     })
 
 }

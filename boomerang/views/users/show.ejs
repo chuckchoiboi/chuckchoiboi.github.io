@@ -7,15 +7,13 @@
                 <img class="rounded" src=<%=user.avatarUrl %> alt="user-avatar">
                 <div class="recent-questions text-left">
                     <span>Recent questions asked:</span>
-                    <a href="#">
-                        <p>Sample question 1</p>
-                    </a>
-                    <a href="#">
-                        <p>Sample question 2</p>
-                    </a>
-                    <a href="#">
-                        <p>Sample question 3</p>
-                    </a>
+                    <% if (questions) { %>
+                        <% for( let i = 0; i < questions.length; i++ ) { %>
+                        <a href="/questions/show/<%= questions[i]._id %>">
+                            <p><%= questions[i].questionTitle %> </p>
+                        </a>
+                        <% } %>
+                    <% } %>
                     <!-- use ejs to render the last 3 questions posted by the user -->
                 </div>
 

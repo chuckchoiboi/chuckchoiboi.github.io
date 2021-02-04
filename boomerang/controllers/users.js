@@ -61,12 +61,19 @@ const showUser = (req, res) => {
 
     db.User.findById(userId, (err, foundUser) => {
         if(err) return console.log(err);
-        
-        const context = {
-            user: foundUser,
-        }
 
-        res.render('users/show', context)
+        db.Question.find({authorId: userId}).sort({'createdAt': -1}).exec((err, foundQuestions) => {
+            if(err) return console.log(err);
+
+            const context = {
+                user: foundUser,
+                questions: foundQuestions,
+            }
+    
+            res.render('users/show', context)
+        }) 
+        
+        
     })
     
 }
