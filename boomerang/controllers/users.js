@@ -30,7 +30,25 @@ const updateUser = (req, res) => {
 
             foundUser.save()
 
-            res.redirect(req.session.returnTo)
+            db.Question.find({authorId: foundUser._id}, (err, foundQuestions) => {
+                if(err) return console.log(err);
+                foundQuestions.forEach((question) => {
+                    question.authorUsername = newUsername;
+                    question.save()
+                })
+
+                db.Answer.find({authorId: foundUser._id}, (err, foundAnswers) => {
+                    if(err) return console.log(err);
+                    foundAnswers.forEach((answer) => {
+                        answer.authorUsername = newUsername;
+                        answer.save()
+                    })
+                    res.redirect(req.session.returnTo)
+                })
+            })
+
+            
+
 
         })
     })
