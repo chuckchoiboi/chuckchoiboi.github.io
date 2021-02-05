@@ -12,11 +12,11 @@ const questionSchema = new Schema({
     questionTitle: {
         type: String,
         required: true,
-        maxLength: 200
     },
     questionBody: {
         type: String,
         required: true,
+        maxLength: 200
     },
     topic: {
         type: [String],

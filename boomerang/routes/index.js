@@ -79,6 +79,21 @@ router.get('/', returnPath, (req, res) => {
                 res.render('index', context)
             })
 
+        } else if (filter.search) {
+            const searchTerm = filter.search
+
+            db.Question.find({$or: [{'questionTitle': new RegExp(searchTerm, 'i')}, {'questionBody': new RegExp(searchTerm, 'i')}]}, (err, foundQuestions) => {
+                const context = {
+                    user: req.user,
+                    questions: foundQuestions,
+                    sort: {
+                        filter: 'search',
+                        val: filter.search
+                    }
+                }
+                res.render('index', context)
+            })
+
         }
     }
 
