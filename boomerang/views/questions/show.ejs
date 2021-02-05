@@ -95,7 +95,7 @@
                         </form>
                     </div>
                     <% } %> 
-                    <div class="col-md-9 mx-auto answer-card-main">
+                    <div class="col-md-9 mx-auto mb-5 answer-card-main">
                         <div class="author d-flex">
                             <span class="mr-2">Author:</span>
                             <span><b>
@@ -114,6 +114,21 @@
                                 <%= answer.answerBody %>
                             </p>
                         </div>
+
+                        <% if (user) { %>
+                            <% if (user._id.equals(answer.authorId)) { %>
+                                    <button class="btn btn-outline-danger delete-answer-trigger">Delete answer</button>
+                                    <div class="form-popup d-none my-2 delete-form">
+                                        <form action="/questions/answers/delete/<%= answer._id %>?_method=DELETE" method="POST"
+                                            class="form-container">
+                                            <p>Click button below to delete the answer</p>
+                                            <button type="submit" class="btn btn-danger">Confirm</button>
+                                            <button type="button" class="btn btn-outline-danger">Cancel</button>
+                                        </form>
+                                    </div>
+                            <% } %>
+                        <% } %>
+
                     </div>
                 </div>
             <% } else { %>
@@ -133,7 +148,7 @@
                             </div>
                         <% } %>
                     <% } %>
-                        <div class="col-md-9 mx-auto answer-card-main">
+                        <div class="col-md-9 mx-auto mb-5 answer-card-main">
                             <div class="author d-flex">
                                 <span class="mr-2">Author:</span>
                                 <span><b>
@@ -152,6 +167,19 @@
                                     <%= answer.answerBody %>
                                 </p>
                             </div>
+                            <% if (user) { %>
+                                <% if (user._id.equals(answer.authorId)) { %>
+                                    <button class="btn btn-outline-danger delete-answer-trigger">Delete answer</button>
+                                    <div class="form-popup d-none my-2 delete-form">
+                                        <form action="/questions/answers/delete/<%= answer._id %>?_method=DELETE" method="POST"
+                                            class="form-container">
+                                            <p>Click button below to delete the answer</p>
+                                            <button type="submit" class="btn btn-danger">Confirm</button>
+                                            <button type="button" class="btn btn-outline-danger">Cancel</button>
+                                        </form>
+                                    </div>
+                                    <% } %>
+                                        <% } %>
                         </div>
                     </div>
             <% } %> 

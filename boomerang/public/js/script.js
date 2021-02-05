@@ -7,6 +7,10 @@ $('#answer-trigger').click(() => {
     $('#answer-form').toggleClass('d-none')
 })
 
+$('.delete-answer-trigger').click((evt) => {
+    $(evt.target).siblings('.delete-form').toggleClass('d-none');
+})
+
 const toggleForm = () => {
     $('#delete-form').toggleClass('d-none')
 }

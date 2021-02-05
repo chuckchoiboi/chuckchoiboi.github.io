@@ -156,6 +156,25 @@ const deleteQuestion = (req, res) => {
     })
 }
 
+const deleteAnswer = (req, res) => {
+    const answerId = req.params.id
+    db.Answer.findByIdAndDelete(answerId, (err, foundAnswer) => {
+        db.Question.findByIdAndUpdate(foundAnswer.questionId, {$pull: { answers: foundAnswer._id }, $inc: { numOfAnswers: -1}}, (err, foundQuestion) => {
+            if(err) return console.log(err);
+            
+            if(foundAnswer.selected === true) {
+                db.User.findByIdAndUpdate(foundAnswer.authorId, {$inc: {'answersSelected' : -1}}, (err, foundUser) => {
+                    if (err) return console.log(err);
+                
+                })
+            }
+            res.redirect(`/questions/show/${foundQuestion._id}`)
+
+        })
+
+    })
+}
+
 module.exports = {
     newQuestion,
     addQuestion,
@@ -163,4 +182,5 @@ module.exports = {
     addAnswer,
     selectAnswer,
     deleteQuestion,
+    deleteAnswer,
 }

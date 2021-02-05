@@ -15,6 +15,7 @@ router.get('/show/:id', returnPath, ctrls.questions.showQuestion)
 router.post('/answers/add/:id', authRequired, ctrls.questions.addAnswer)
 router.put('/answers/select/update/:id', ctrls.questions.selectAnswer)
 router.delete('/delete/:id', authRequired, ctrls.questions.deleteQuestion)
+router.delete('/answers/delete/:id', authRequired, ctrls.questions.deleteAnswer)
 
 
 
