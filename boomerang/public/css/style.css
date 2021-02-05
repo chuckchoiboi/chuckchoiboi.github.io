@@ -1,5 +1,95 @@
-.profile-container {
-  width: 15vw;
+:root {
+  --primary: #ddaf94;
+  --primary-hover: #cba088;
+  --secondary: #e8cebf;
+  --tertiary: #266150;
+  --quarternary: #4f4846;
+  --quinary: #fdf8f5;
+}
+
+body {
+  font-family: 'BioRhyme', serif;
+  background: url(../image/dot-grid.png) repeat 0 0;
+}
+
+header {
+  background: var(--quinary);
+}
+
+#logo {
+  color: var(--primary);
+  font-size: 40px;
+}
+
+#logo:hover {
+  text-decoration: unset;
+}
+
+.navbar .user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin: 0 10px 0 10px;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--secondary);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--secondary);
+}
+
+.btn-primary:focus {
+  background-color: var(--primary-hover) !important;
+  border-color: var(--secondary) !important;
+  box-shadow: 0 0 0 0.2rem var(--secondary) !important;
+}
+
+.show > .btn-primary.dropdown-toggle {
+  background-color: var(--primary-hover) !important;
+  border-color: var(--secondary) !important;
+  box-shadow: 0 0 0 0.2rem var(--secondary) !important;
+}
+
+/* Home Search Bar */
+.homepage .questions-searchbar form input {
+  width: 80%;
+}
+
+.homepage .questions-searchbar form button {
+  width: 20%;
+}
+
+/* Home filter buttons */
+.homepage .questions-buttons-filter > div {
+  width: 33.33%;
+}
+
+.homepage .questions-buttons-filter button {
+  width: 100%;
+}
+
+.homepage .questions-buttons-filter button:hover {
+  color: #fff;
+  background-color: #545b62;
+  border-color: #4e555b;
+}
+
+.homepage .dropdown-menu {
+  width: 100%;
+}
+
+.homepage .dropdown-item:active {
+  background-color: #545b62;
+}
+
+.btn-secondary {
+  color: unset;
+  background-color: unset;
+  border-color: transparent;
 }
 
 /***** checkbox style *****/

@@ -11,7 +11,7 @@ const ctrls = require('../controllers')
 
 router.get('/new', authRequired, ctrls.questions.newQuestion)
 router.post('/add', authRequired, ctrls.questions.addQuestion)
-router.get('/show/:id', ctrls.questions.showQuestion)
+router.get('/show/:id', returnPath, ctrls.questions.showQuestion)
 router.post('/answers/add/:id', authRequired, ctrls.questions.addAnswer)
 router.put('/answers/select/update/:id', ctrls.questions.selectAnswer)
 

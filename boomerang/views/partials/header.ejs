@@ -1,19 +1,21 @@
 <body>
-    <nav class="navbar container">
-        <a href="/">Boomerang</a>
-        <!-- Login -->
-        <% if (user) { %>
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="user-dropdown" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <%= user.username %><img class="user-avatar" src=<%=user.avatarUrl %>>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="user-dropdown">
-                        <a class="dropdown-item" href="/users/show/<%= user._id %>">Profile</a>
-                        <a class="dropdown-item" href="/logout">Logout</a>
+    <header>
+        <nav class="navbar container">
+            <a id="logo" href="/">Boomerang</a>
+            <!-- Login -->
+            <% if (user) { %>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="user-dropdown" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <%= user.username %><img class="user-avatar" src=<%=user.avatarUrl %>>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="user-dropdown">
+                            <a class="dropdown-item" href="/users/show/<%= user._id %>">Profile</a>
+                            <a class="dropdown-item" href="/logout">Logout</a>
+                        </div>
                     </div>
-                </div>
-        <% } else { %>
-            <a id="login" href="/auth/google">Login with Google</a>
-        <% } %>
-    </nav>
+            <% } else { %>
+                <a id="login" href="/auth/google">Login with Google</a>
+            <% } %>
+        </nav>
+    </header>
