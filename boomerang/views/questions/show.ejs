@@ -62,7 +62,29 @@
                             </div>
                             </form>
                         </div>
-                        <% } %>
+                        <% } else { %>
+                            <div class="col-md-9 mx-auto answer-selector container <%= answer.selected ? 'answer-selected' : 'answer-not-selected' %>"
+                                id="answer-selector<%= idx %>">
+                                <form onsubmit="return false;">
+                                    <div class="round">
+                                        <input type="checkbox" class="answer-selector-checkbox" id="checkbox<%= idx %>"
+                                            onChange="this.form.submit()" />
+                                        <label for="checkbox<%= idx %>"></label>
+                                    </div>
+                                </form>
+                            </div>
+                        <% } %> 
+                    <% } else {%>
+                    <div class="col-md-9 mx-auto answer-selector container <%= answer.selected ? 'answer-selected' : 'answer-not-selected' %>"
+                        id="answer-selector<%= idx %>">
+                        <form onsubmit="return false;">
+                            <div class="round">
+                                <input type="checkbox" class="answer-selector-checkbox" id="checkbox<%= idx %>"
+                                    onChange="this.form.submit()" />
+                                <label for="checkbox<%= idx %>"></label>
+                            </div>
+                        </form>
+                    </div>
                     <% } %> 
                     <div class="col-md-9 mx-auto answer-card-main">
                         <div class="author d-flex">
