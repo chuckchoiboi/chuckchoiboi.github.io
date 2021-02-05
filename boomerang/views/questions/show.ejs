@@ -26,7 +26,16 @@
             </div>
             <% if (user) { %>
                 <% if (!user._id.equals(question.authorId)) { %>
-                    <button id="answer-trigger" class="btn btn-outline-success">Answer question</button>
+                    <button id="answer-trigger" class="btn btn-outline-success open-button">Answer question</button>
+                <% } else { %>
+                    <button id="delete-trigger" class="btn btn-outline-danger" onclick="toggleForm()">Delete question</button>
+                    <div class="form-popup d-none my-2" id="delete-form">
+                        <form action="/questions/delete/<%= question._id %>?_method=DELETE" method="POST" class="form-container">
+                            <p>Click button below to delete the question</p>                    
+                            <button type="submit" class="btn btn-danger">Confirm</button>
+                            <button type="button" class="btn btn-outline-danger" onclick="toggleForm()">Cancel</button>
+                        </form>
+                    </div>
                 <% } %>
             <% } else { %>
             <button id="answer-trigger" class="btn btn-outline-success">Answer question</button>

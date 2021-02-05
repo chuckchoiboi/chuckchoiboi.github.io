@@ -120,10 +120,47 @@ const selectAnswer = (req, res) => {
 
 }
 
+const deleteQuestion = (req, res) => {
+    const questionId = req.params.id
+    db.Question.findByIdAndDelete(questionId, (err, deletedQuestion) => {
+        if(err) return console.log(err);
+
+        db.User.findByIdAndUpdate(deletedQuestion.authorId, {$inc: {'questionsAsked' : -1}}, (err, foundUser) => {
+            if(err) return console.log(err);
+
+            db.Answer.find({questionId: questionId}, (err, foundAnswers) => {
+                if(err) return console.log(err);
+
+                db.Answer.deleteMany({questionId: questionId}, (err, deleted) => {
+                    if(err) return console.log(err);
+    
+                    
+                    
+                    foundAnswers.forEach((answer) => {
+                        console.log(answer.selected);
+                        if(answer.selected === true) {
+                            
+                            db.User.findByIdAndUpdate(answer.authorId, {$inc: {'answersSelected' : -1}}, (err, foundUser) => {
+                                if (err) return console.log(err);
+                            })
+    
+                        }
+                    })
+                    res.redirect(`/`)
+                })
+            })
+
+
+        })
+
+    })
+}
+
 module.exports = {
     newQuestion,
     addQuestion,
     showQuestion,
     addAnswer,
     selectAnswer,
+    deleteQuestion,
 }

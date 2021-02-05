@@ -6,3 +6,7 @@ $('#username-edit').click(() => {
 $('#answer-trigger').click(() => {
     $('#answer-form').toggleClass('d-none')
 })
+
+const toggleForm = () => {
+    $('#delete-form').toggleClass('d-none')
+}

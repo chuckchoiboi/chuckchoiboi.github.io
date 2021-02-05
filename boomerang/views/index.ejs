@@ -75,7 +75,18 @@
             <div class="question-author mx-5">
                 <span>Username: <b><%= question.authorUsername %></b></span>
             </div>
-            <div class="question-body mx-5 mt-1">
+            <div class="published d-flex mx-5">
+                <span class="mr-2">Published: </span>
+                <span>
+                    <%= question.createdAt %>
+                </span>
+            </div>
+            <div class="topics d-flex mx-5">
+                <% question.topic.forEach(element=> { %>
+                    <a href="/?topic=<%= element %>">#<%= element %>&nbsp</a>
+                    <% }) %>
+            </div>
+            <div class="question-body mx-5 mt-3">
                 <p>
                     <%= question.questionBody %> 
                 </p>
