@@ -1,10 +1,11 @@
 <%- include('../partials/base') %>
 <%- include('../partials/header') %>
-    <div class="container">
+    <div class="container new-question-form">
         <form action="/questions/add" method="POST">
-            <div class="form-group">
-                <input class="form-control mx-1" type="text" name="questionTitle" maxlength="60" placeholder="Title" required>
-                <textarea class="form-control mx-1" type="text" name="questionBody" maxlength="200" placeholder="Question" required></textarea>
+            <div class="form-group m-5 p-5 shadow">
+                <h1>Submit your question</h1>
+                <input class="form-control mx-1 my-2" type="text" name="questionTitle" maxlength="40" placeholder="Title" required>
+                <textarea class="form-control mx-1 my-2" type="text" name="questionBody" maxlength="200" placeholder="Question" required></textarea>
                 
                 <div class="topic">
                     <select id="topic" name="topic" class="selectpicker" multiple data-live-search="true" data-none-selected-text="Topic">

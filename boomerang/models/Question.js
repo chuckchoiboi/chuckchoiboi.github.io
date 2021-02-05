@@ -12,6 +12,7 @@ const questionSchema = new Schema({
     questionTitle: {
         type: String,
         required: true,
+        maxLength: 40,
     },
     questionBody: {
         type: String,
