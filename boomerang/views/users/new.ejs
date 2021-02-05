@@ -1,13 +1,15 @@
 <%- include('../partials/base') %>
 <%- include('../partials/header') %>
     <div class="container">
-        <form action="/users/update/<%= user._id %>?_method=PUT" method="POST">
-            <div class="form-group d-flex">
-                <input type="email" name="email" readonly value=<%= user.email %>>
-                <input class="form-control mx-1" type="text" name="username" minlength="5" maxlength="15" placeholder="Username">
-                <input class="btn btn-primary mx-2" type="submit" value="Create Account">
-            </div>
-        </form>
+        <div class="row">
+            <form class="col-md-6 mx-auto my-5" action="/users/update/<%= user._id %>?_method=PUT" method="POST">
+                <div class="form-group d-flex">
+                    <input type="email" name="email" readonly value=<%= user.email %>>
+                    <input class="form-control mx-1" type="text" name="username" minlength="5" maxlength="12" placeholder="Username">
+                    <input class="btn btn-primary mx-2" type="submit" value="Create Account">
+                </div>
+            </form>
+        </div>
     </div>
 
 <%- include('../partials/footer') %>

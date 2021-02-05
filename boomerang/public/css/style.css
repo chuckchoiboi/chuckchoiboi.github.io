@@ -230,6 +230,13 @@ header {
   margin-top: 10px;
 }
 
+/* Profile Detail Page */
+
+.profile-detail-page .left-column,
+.profile-detail-page .right-column {
+  width: 50%;
+}
+
 /***** checkbox style *****/
 
 .answer-not-selected {

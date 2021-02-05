@@ -9,6 +9,8 @@ const userSchema = new Schema({
     username: {
         type: String,
         unique: true,
+        minLength: 5,
+        maxLength: 12
     },
     avatarUrl: {
         type: String,
