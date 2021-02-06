@@ -9,7 +9,7 @@ const routes = require('./routes')
 const logger = require('./middleware/logger')
 
 /* NOTE PORT */
-const PORT = 3000;
+const PORT = process.env.PORT
 
 /* NOTE Authentication */
 require('dotenv').config()

@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
+require('dotenv').config()
 
-const connectionStr = 'mongodb://127.0.0.1:27017/boomerang';
-
-mongoose.connect( connectionStr, {
+mongoose.connect( process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,

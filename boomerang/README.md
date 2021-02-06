@@ -95,7 +95,7 @@ Answer
   - passport-google-oauth
 - Bootstrap
 - jQuery
-- MongoDb
+- MongoDb Atlas
 - Trello
 - Mockflow
 - Heroku
