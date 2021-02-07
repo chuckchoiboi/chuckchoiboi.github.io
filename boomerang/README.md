@@ -1,5 +1,6 @@
 # **APP TITLE: BOOMERANG**
 
+[Link to the app](https://app-boomerang.herokuapp.com/)
 <br>
 <br>
 
