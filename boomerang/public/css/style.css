@@ -98,6 +98,26 @@ body a:hover {
 
 header {
   background: var(--quinary);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+main {
+  margin-top: 125px;
+}
+
+footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0px;
+  background: var(--quinary);
+}
+
+footer p {
+  color: var(--primary);
+  margin: 0;
 }
 
 #logo {
@@ -107,6 +127,14 @@ header {
 
 #logo:hover {
   text-decoration: unset;
+}
+
+#login {
+  color: #ffffff;
+  background: var(--primary);
+  border-radius: 5px;
+  padding: 1px 5px;
+  margin: 5px;
 }
 
 .navbar .user-avatar {
@@ -284,4 +312,53 @@ header {
 
 .answer-selected .round input[type='checkbox'] + label:after {
   opacity: 1;
+}
+
+/* MEDIA QUERIES */
+
+@media only screen and (max-width: 600px) {
+  #logo {
+    font-size: 20px;
+  }
+
+  .navbar {
+    display: block;
+  }
+
+  #login-wrapper {
+    text-align: right;
+  }
+
+  .navbar .user-avatar {
+    width: 25px;
+    height: 25px;
+  }
+
+  .new-question-form .form-group {
+    margin: 0px !important;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    padding: 5px;
+  }
+
+  p {
+    font-size: 15px;
+  }
+
+  .question-module {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .questions-show-page .question-card,
+  .questions-show-page .answer-card {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
 }

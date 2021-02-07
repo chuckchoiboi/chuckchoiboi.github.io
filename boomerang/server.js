@@ -48,5 +48,5 @@ app.use('/questions', routes.questions )
 
 /* NOTE App Listening */
 app.listen(PORT, () => {
-    console.log(`App is listening at port ${PORT}\nhttps://app-boomerang.herokuapp.com/${PORT}`);
+    console.log(`App is listening at port ${PORT}\nhttp://localhost:${PORT}`);
 })

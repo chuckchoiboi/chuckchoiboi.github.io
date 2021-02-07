@@ -42,8 +42,6 @@ const showQuestion = (req, res) => {
             foundAnswers.forEach(answer => {
                 if (answer.selected) answerSelected = true 
             })
-
-            console.log(answerSelected);
             
             const context = {
                 user: req.user,
@@ -98,7 +96,6 @@ const selectAnswer = (req, res) => {
             db.User.findByIdAndUpdate(foundAnswer.authorId, {$inc: {'answersSelected' : -1}}, (err, foundUser) => {
                 if (err) return console.log(err);
             })
-            console.log(foundAnswer.questionId);
             db.Question.findByIdAndUpdate(foundAnswer.questionId, {'answerSelected': false}, (err, foundQuestion) => {
                 if(err) return console.log(err);
             }) 
@@ -108,7 +105,6 @@ const selectAnswer = (req, res) => {
             db.User.findByIdAndUpdate(foundAnswer.authorId, {$inc: {'answersSelected' : 1}}, (err, foundUser) => {
                 if (err) return console.log(err);
             })
-            console.log(foundAnswer.questionId);
             db.Question.findByIdAndUpdate(foundAnswer.questionId, {'answerSelected': true}, (err, foundQuestion) => {
                 if(err) return console.log(err);
             })
@@ -137,7 +133,6 @@ const deleteQuestion = (req, res) => {
                     
                     
                     foundAnswers.forEach((answer) => {
-                        console.log(answer.selected);
                         if(answer.selected === true) {
                             
                             db.User.findByIdAndUpdate(answer.authorId, {$inc: {'answersSelected' : -1}}, (err, foundUser) => {

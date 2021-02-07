@@ -89,14 +89,6 @@ const index = (req, res) => {
     }
 }
 
-const login = () => {
-    console.log('hi');
-    passport.authenticate(
-    'google',
-    { scope: ['profile', 'email'] }
-)
-}
-
 
 module.exports = {
     index,

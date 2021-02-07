@@ -1,7 +1,6 @@
 const db = require('../config/database')
 
 const newUser = (req, res) => {
-    console.log(req.user);
 
     const context = {
         user: req.user,

@@ -30,12 +30,6 @@ passport.use(new GoogleStrategy({
             email: profile.emails[0].value,
             googleId: profile.id,
             avatarUrl: profile._json.picture,
-            username: {
-              type: String,
-              unique: true,
-              sparse: true,
-              minLength: 5,
-              maxLength: 12}
             });
             newUser.save(function(err) {
               if (err) return cb(err);
